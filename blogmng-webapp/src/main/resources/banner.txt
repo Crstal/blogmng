@@ -1,0 +1,124 @@
+${AnsiColor.BRIGHT_YELLOW}
+                                                    :
+                                                    E    ;
+                                                   ;W: fK
+                                                   EL#KEW #
+                                                 E#EDKEEfK
+                                                KKEEEfGEKK.
+                                                WWEKEEEKK,:..
+                                                #EKKKWEEE;EW.
+                                                 WKEKEEEKK#
+                                                 WK#EKEEE#:
+                                                 ##:iiKKWD
+                                               . EKEEEEK:
+                                               #WKKEEEEEEW.
+                                              #EEEEEEEEEEKE
+                                             iWKEEEEEEEEEKEi.
+                                             KWEEEEEEEEEEKEE.
+                                             WKKKEKKEEEEEEEK
+                                            KWKKWEEKKDEEEEKK.
+                                            WW:::DEEEDE:;:EK.
+                                            #W:::::;;:::::KE
+                                            GW::::::::::,:EW
+                                             W::::::::::::WE.
+                       ,  ..                G#.;,,::::,::::KG
+                       f .::               .tD:.iE.:::W::,:,W
+              . : :iiD,Ej D K.             .fW:G :j..:..L::tD
+          #LLGGDtfjGEtLL,K GE.              Eti:,,i,,:::::,GDG .
+       .DDGLWEEKG :  jt .  .j               GGi:::t.::::::jKGL:
+     WijGGGDEG      t.G:K:,D               DLGt:::::::::::LLLft
+   LGGiGGGDE        j,:,.:EK,:,            DDGDi:::,::::::EGjfj
+jt                 ,i,:.,,::.              LDGEj.:.;;::::KGGjjjE..
+                    ;:::::f                jjEfW;:., t,:tLGGjEjjG
+                   .W:::::D              #WKjtGf#i.:;:,itEGGjGjjLt
+                    t:::::i           .ijjfffjfEjif:,,LtW.DGjjjjffE
+                    f:::::f           jEjjjfifjjWfittiit,:,fLfjtfDLW
+                    i:::::           #:tjfjjLfjjttttit;:f::fjt#jjLLD,
+                     ::::W          .,;;KfLjjfffjDGti:::;:DtKfjjjfWWK#:
+                   : ,::,,          WE;;;DDjjjifjfjtit::,tDLLGftjfGDEEEE
+                      :::::         EWKj;;ijfjfLjjtfWDjiiftjjfjDjEf,#E;,j:
+                      ::::, :     .#jKii;;tGtjjfLfGffEjtjjfjfjjfjj,jj,;ij
+                       .::,,      D:Et;,;;,fLjL,tjWfjjfijjfjjjftK#ttf;;iL
+                       ;::::,   DtKK;jti;;,GfjfttjjjjjjWjjGfLjLttijt;;,fLftE
+                       .,::::;.tjLti:;DttjjiLLjjfjfffjjfffjjjjjjjji,;,;Gj.:::,t
+                        :.:::.:jij#;;;,,,jfttjjjftfKtjjjjjjjjjjGE,,;;jK#,::::.,,,K
+                        t::::::;:ttf;,,;;;,fftjfjftjjjjjjjjjjjfWfjjjjjG,:::::::::::::::::.;; :.
+                         ::::::.E,tGjjjji;,jffjjjfjjjjjfjjjjjjf.KjjjjD,,::::::::::::::::::::,.E
+                          ::::::::tGjjjjjfGLtjjjjjjjjjjjjjfKGfKiE jfG  ,::::::::::,tiiti::::::::E:
+                          W:::::.iiGtjjttLDjijjjfjtLfKjjjKLWfEjfD  ,     W..;ttit;ijDWG:i:::.,:f:t.
+                           t:::::ttDKjtLLGLjjjjj#fjjjjjjjWLfjEjLG  :    .               .,i:tKtf:L.
+                            tj:,:iLWDtj GLfjjjjjLWjfjKfjGEGWfEjGG                       : :jti:,;G
+                            ,tit;  GEK  GfjjjjjjGGjEfLjfiLLDjEjE#                   . G      ;E#   .
+                               . .   .  EfjjjjjjLGjGfjjLfjGGf#LKE                   ,..            ,
+                                        .fjjjjjjGGfffWtDijGfWKiLL                  :
+                                        .fjjjjjjKGfWEjfWDjGGjfjEj                                 ;
+                                         jLjjjfjWGGWLjjDWjGGjjjGf               ::
+                                          jjjjjjWGfjjjjjWfGGjjfGf                             .  :
+                                          tjjjjjWGLjfjfLjjGGffjE.                           .  L
+                                         GjjjjjjWGDfEjjDjjEELLtf..            .LL.          f
+                                         fjjjjjjKLKjWLjGffjjjjffL.          ,,#W       .,   D:
+                                         fLjjjjjfDEDWfttLjjjjjf#jj.         fD     .D  fK   t.
+                                       .GDLjjjjjjjfjjjjjftjjLGttjj       .,j        K fK    f
+                                      . GLLGGjjjjjjjjjjjjLLLLjjjjj:  . KDE#        f# j.    j
+                                       GGftLLGGLGDGGGGGGLWjDtjjjjj   D#KE.         EE;     tW
+                                       GGjjjjfjfjfjjjjjfjjjtfjjjjf  GGEE           #j:     Wj
+                                       GGjjjjjjjjjjjjjfjjjjjDjjjjL.tLEK          WLDK      G:
+                                       LGjjjjjjjjjjjjjjjjjjjtjjjGKDt#:         :GW#L:      Gt
+                                       #DLfjjjjjjjjjjjjjjjjj;ftG#GD            EGGGW.     DGf
+                                       ,LGfjjjjjjjjjjjjjjjjjEGfEGDK            ii;KG      EGD
+                                        tGGLjjjjjjjjjjjjfjLffGEEDDDEG         fGDKEG      WGK
+                                        KDWGGGfjjjjjjjfGGDWKDDDDDDEDD        .fGKGGK      GD:
+                                        DDDDDKWGGLGGE#KEKEDDDDKEGDEDDD       GGE LGK.     LG
+                                       .GDDDDDDDDEEEEDDDDDDEEEDDDDDDDDG      fK  GE       i#
+                                       KDDDDDDDDDDDDEEEDEKEDDDDDDDDDDDDE    DD   KE .     iW
+                                    . .EDDEEDDDDDDDDDDDEEEDDDDDDDDDDDDDDE  ,     KE       L
+                                  .GD#DWDDDDEDDDDDDDDDDDDDDDDDDDDDDDDDDDDD  .    EE       G
+                                   K##KGDDDDDDDDDDDDDDDDKDDDDDDDDDDDDDDDDDE      G.       W
+                                  KKGKD GEDDDDDKDDDDDDDDGEEEEDDDEEDDDDDDDDDK     E
+                                  EEEK  .:LGDDDDDDEEDDEWEEDEEEWDDDDDDDDDDDDDD    K
+                                 KWEEW,K:..LEDDDDDDKEEDKDDEEDDDDDDDDDDDDDDDDDD,. t
+                                fWEEEEEE E., EDDDDEEEE.DEWEEKEDDDDDDDDDDDDDDDDE:
+                               .EEDKKKDEE,:E::GGEEEWt    KEKEEEKDDDDDDDDDDDDDDDD
+                               DEEE,..EEKK#: ..GEEG      .  WDKKEEDDDDDDDDDDDDDDE.
+                              EKEEED::.tEEEE:::KGt           . #DEDDDDDDDDDDDDDDDD.
+                              KEEEEE.,..,EED#:itW.             :#KEEDDDDDDDDDDDDDDL
+                              DEEWGEDj. t EEEW;i                 .WEEDDDDDDDDDDDDDD#
+                                GDDDDEDW.:;E#E;:                    #KWEDGDDDDDDDDDD
+                                WDDDDDKE ::DKE                      . #EEEDDDDDDDDDG.
+                               :KDDDDDDDE:GiE                         : WLEKDDDDDDDD
+                              DDDDDDDDDDDD,:                              #EEEEEDDDD
+                             .DEDDDDDDDDDED                               EWKK#EDDDD
+                            .DDDDDDDDDDDKW                                EDDDDDDDDK
+                            LDDDDDDDDDDEW .                               EGDDDDDDD,
+                           .#DDDDDDDDDDG                                  EDDDDDDDG.
+                           DGDDDDDDDDKK                                   KDDDDDDDD
+                          LEGDDDDDDEEW                                    EDGDDDDDD
+                          DDDDDDDEEEW                                     KDDDDDDDD
+                         :EDDDDDEEEKj                                     EKDDDDDDG
+                         DGDDDDDDDEE                                      EKDDDDDD#
+                         KDDDDDDDEW                                       KWDDDDDDf
+                        DDDDDDDDEK                                        DWDDDDDD
+                        DDDDDDDEED                                         ;;#DEKD
+                        ;EEDDDEED                                          iiiit
+                       LiLDDDEKK :                                         itt::
+                       :itEEKEE                                            i:::f
+                      ..;titLE                                             i,::,
+                      f:,ttD                                               t::,
+                     .:::tt                                               #t::;
+                      :::t:                                               Wt::,:
+                     .::.L.                                               EEEEDE
+                   .K:::f                                                 KEEEK.
+                   WE:::W                                                .EWEWK
+                   EK#WKW                                                KEEEED#
+                   KKKEKt                                                EEEEEEEK .
+                  KKEEEW                                                :EEEEEEEWE
+                 GDEEEEK                                                #KEEEEEEEDDD
+                 EEEKWWf                                                WWWWKEEKKE,.LE .
+                EEEKEWW                                                 WW##WEEEW.:.ti.
+               KEEEEEW#                                                  #WW#DEEEE,t;WK
+              EDEEEKKWW                                                        WEKKDK# .
+             #j,,:KEWWW                                                            .
+           . .:. t.K#WW
+           .#;,E,,.W##
+            KKDDK#DE.
+             :KWWE

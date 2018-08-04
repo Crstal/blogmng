@@ -1,0 +1,6 @@
+server:
+  port: 8080
+  servlet:
+    application-display-name: 博客后端管理
+
+
