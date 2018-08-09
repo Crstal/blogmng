@@ -1,6 +1,7 @@
 package com.crystal.blog.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.crystal.blog.dao.model.User;
 import com.crystal.blog.service.user.UserSefrvice;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
