@@ -9,20 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>blogmng-webapp</artifactId>
+    <artifactId>blogmng-common</artifactId>
 
-    <dependencies>
 
-        <dependency>
-            <groupId>com.crystal.blog</groupId>
-            <artifactId>blogmng-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.crystal.blog</groupId>
-            <artifactId>blogmng-service</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-    </dependencies>
 </project>

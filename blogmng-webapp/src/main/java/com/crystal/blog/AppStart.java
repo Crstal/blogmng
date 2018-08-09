@@ -1,4 +1,4 @@
-package crystal.blog;
+package com.crystal.blog;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

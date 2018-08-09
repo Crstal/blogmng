@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!-- mvn mybatis-generator:generate -->
+    <context id="blog" targetRuntime="Mybatis3">
+        <property name="javaFileEncoding" value="UTF-8"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
+
+        <plugin type="com.crystal.mybatis.plugin.LombokPlugin"/>
+
+        <!-- 自定义方法 -->
+        <plugin type="com.crystal.mybatis.plugin.IgnorePlugin">
+            <property name="ignoreFields" value="id,create_By,create_Time,update_By,update_Time"/>
+        </plugin>
+
+        <commentGenerator type="com.crystal.mybatis.MyCommentGenerator">
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/blog?useUnicode=true"
+                        userId="crystal"
+                        password="123456">
+        </jdbcConnection>
+
+        <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成实体类文件 -->
+        <javaModelGenerator targetPackage="com.crystal.blog.dao.model"
+                            targetProject="src/main/java" >
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+            <property name="rootClass" value="com.crystal.blog.dao.model.base.BaseModel" />
+        </javaModelGenerator>
+
+        <!-- 该配置生成 mybatis 映射文件，即Mapper.XML-->
+        <sqlMapGenerator targetPackage="mapper"
+                         targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成 java 接口代码,即Mapper  -->
+        <javaClientGenerator type="com.crystal.mybatis.MyJavaMapperGenerator"
+                             targetPackage="com.crystal.blog.dao.mapper"
+                             targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="rootInterface" value="com.crystal.blog.dao.mapper.base.BaseMapper"/>
+        </javaClientGenerator>
+
+        <table schema="blog" tableName="article" domainObjectName="Article">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="attachment" domainObjectName="Attachment">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="authz" domainObjectName="Authz">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="type" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="authz_role" domainObjectName="AuthzRole">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="authz_type" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="comment" domainObjectName="Comment">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="content" domainObjectName="Content">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="role" domainObjectName="Role">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="role_user" domainObjectName="RoleUser">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="blog" tableName="user" domainObjectName="User">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="sex" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
+        <table schema="blog" tableName="user_article_catetory" domainObjectName="UserArticleCategory">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="blog" tableName="user_extend" domainObjectName="UserExtend">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="blog" tableName="user_follow" domainObjectName="UserFollow">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="blog" tableName="user_follow_article" domainObjectName="UserFollowArticle">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+    </context>
+</generatorConfiguration>
