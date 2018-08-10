@@ -18,7 +18,7 @@
             <property name="ignoreFields" value="id,create_By,create_Time,update_By,update_Time"/>
         </plugin>
 
-        <commentGenerator type="com.crystal.mybatis.MyCommentGenerator">
+        <commentGenerator type="com.crystal.mybatis.ModelFieldCommentGenerator">
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
@@ -48,7 +48,7 @@
         </sqlMapGenerator>
 
         <!-- 生成 java 接口代码,即Mapper  -->
-        <javaClientGenerator type="com.crystal.mybatis.MyJavaMapperGenerator"
+        <javaClientGenerator type="com.crystal.mybatis.NoExampleJavaMapperGenerator"
                              targetPackage="com.crystal.blog.dao.mapper"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
