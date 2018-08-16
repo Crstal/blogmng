@@ -14,6 +14,8 @@ public enum ErrorCode implements Serializable {
 
     SYS_ERROR("1002", " 系统异常"),
 
+    TRANSFORM_ERROR("1003","对象转换异常"),
+
     /**调用异常 */
     SERVICE_REQUEST_REPEAT("1101","重复调用"),
 

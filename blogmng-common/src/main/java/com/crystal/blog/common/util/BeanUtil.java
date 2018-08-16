@@ -1,5 +1,6 @@
 package com.crystal.blog.common.util;
 
+import com.crystal.blog.common.enums.ErrorCode;
 import com.crystal.blog.common.exception.BussinessRuntimeException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
@@ -17,7 +18,7 @@ public class BeanUtil {
             result = vo.newInstance();
         } catch (InstantiationException | IllegalAccessException e) {
             log.error("bean对象转换创建实例{}异常", vo.getName());
-            throw new BussinessRuntimeException();
+            throw new BussinessRuntimeException(ErrorCode.TRANSFORM_ERROR.getCode(), ErrorCode.TRANSFORM_ERROR.getMessage());
         }
         if (bo != null) {
             BeanUtils.copyProperties(bo, result);
