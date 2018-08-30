@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="front/layout/layout">
+<!-- layout文件路径-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>蛾子的博客</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<div layout:fragment="content" >
+    <div class="breadcrumbs">
+        <a href="index.html">首页</a> &nbsp;/&nbsp; <span>博文</span>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="page-header" style="text-align: center;">
+                <h1 th:text="${article.title}"> <small>  子标题</small></h1>
+                <p><span th:text="${'时间：'+ article.createTime + ' 访问量：' + article.visitCount}"></span></p>
+            </div>
+            <div id="articleContent" class="contenttext" th:utext="${article.content}">
+            </div>
+
+            <h3>给我留言</h3>
+            <input class="input-xlarge" type="text" placeholder="昵称">&nbsp;<span style="color: red;">*</span>
+            <a class="btn btn-success" href="#" style="float: right">提交评论</a><br>
+            <input class="input-xlarge" type="text" placeholder="邮箱">&nbsp;<span style="color: red;">*</span><br>
+            <textarea placeholder="说点什么,不要超过200字" style="width: 100%; height: 100px;"></textarea>
+            <br>
+
+            <h3>10 个小伙伴留下话</h3>
+            <hr>
+            <ul class="media-list">
+                <li class="media">
+                    <a class="pull-left" href="#">
+                        <img src="http://placehold.it/64x64" class="img-circle">
+                    </a>
+                    <div class="media-body">
+                        <h4 class="media-heading">Media heading</h4>
+                        <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.</p>
+                        <!-- Nested media object -->
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img src="http://placehold.it/64x64" class="img-circle">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Nested media heading</h4>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                <!-- Nested media object -->
+                                <div class="media">
+                                    <a class="pull-left" href="#">
+                                        <img src="http://placehold.it/64x64" class="img-circle">
+                                    </a>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">Nested media heading</h4>
+                                        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Nested media object -->
+                        <div class="media">
+                            <a class="pull-left" href="#">
+                                <img src="http://placehold.it/64x64" class="img-circle">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading">Nested media heading</h4>
+                                Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin commodo. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis.
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <script th:src="@{/scripts/editor.md-master/lib/marked.min.js}"></script>
+    <script th:src="@{/scripts/editor.md-master/lib/prettify.min.js}"></script>
+    <script th:src="@{/scripts/editor.md-master/lib/raphael.min.js}"></script>
+    <script th:src="@{/scripts/editor.md-master/lib/underscore.min.js}"></script>
+    <script th:src="@{/scripts/editor.md-master/lib/sequence-diagram.min.js}"></script>
+    <script th:src="@{/scripts/editor.md-master/lib/flowchart.min.js}"></script>
+    <script th:src="@{/scripts/editor.md-master/lib/jquery.flowchart.min.js}"></script>
+    <script th:src="@{/scripts/editor.md-master/editormd.js}"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            editormd.markdownToHTML("articleContent", {
+                htmlDecode      : "style,script,iframe",  // you can filter tags decode
+                emoji           : true,
+                taskList        : true,
+                tex             : true,  // 默认不解析
+                flowChart       : true,  // 默认不解析
+                sequenceDiagram : true,  // 默认不解析
+                tocm : true,//菜单
+                tocContainer : "",
+                tocDropdown   : false
+            });
+        })
+    </script>
+</div>
+</body>
+</html>

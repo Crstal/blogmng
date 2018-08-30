@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2018-08-08 19:40:52
+Date: 2018-08-27 17:16:19
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -22,7 +22,8 @@ DROP TABLE IF EXISTS `article`;
 CREATE TABLE `article` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `user_id` int(11) NOT NULL COMMENT '用户id',
-  `category_id` bigint(11) NOT NULL COMMENT '文章类型',
+  `category_code` varchar(11) NOT NULL COMMENT '文章类型',
+  `category_name` varchar(20) NOT NULL COMMENT '文章类型',
   `title` varchar(50) NOT NULL COMMENT '文章标题',
   `pre_article_id` int(11) DEFAULT NULL COMMENT '上一篇文章id',
   `pre_article_title` varchar(50) DEFAULT NULL COMMENT '上一篇文章标题',
@@ -38,7 +39,7 @@ CREATE TABLE `article` (
   `update_by` varchar(20) DEFAULT NULL COMMENT '修改人',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='文章表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章表';
 
 -- ----------------------------
 -- Table structure for attachment
@@ -55,7 +56,7 @@ CREATE TABLE `attachment` (
   `update_by` varchar(20) DEFAULT NULL COMMENT '修改人',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='附件表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='附件表';
 
 -- ----------------------------
 -- Table structure for authz
@@ -72,7 +73,7 @@ CREATE TABLE `authz` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`,`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='权限表';
 
 -- ----------------------------
 -- Table structure for authz_role
@@ -89,7 +90,7 @@ CREATE TABLE `authz_role` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `role_code` (`role_code`,`authz_code`,`authz_type`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='角色权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色权限表';
 
 -- ----------------------------
 -- Table structure for comment
@@ -110,18 +111,19 @@ CREATE TABLE `comment` (
   `update_by` varchar(20) DEFAULT NULL COMMENT '修改人',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='文章评论表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章评论表';
 
 -- ----------------------------
 -- Table structure for content
 -- ----------------------------
-DROP TABLE IF EXISTS `content`;
-CREATE TABLE `content` (
+DROP TABLE IF EXISTS `article_content`;
+CREATE TABLE `article_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `aritcle_id` int(11) NOT NULL COMMENT '关联文章id',
   `content` text COMMENT '内容',
   `status` tinyint(4) DEFAULT NULL COMMENT '状态 1正常 2删除',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='内容表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='内容表';
 
 -- ----------------------------
 -- Table structure for role
@@ -138,7 +140,7 @@ CREATE TABLE `role` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `code` (`code`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='角色表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色表';
 
 -- ----------------------------
 -- Table structure for role_user
@@ -151,7 +153,7 @@ CREATE TABLE `role_user` (
   `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='角色用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='角色用户表';
 
 -- ----------------------------
 -- Table structure for user
@@ -175,20 +177,44 @@ CREATE TABLE `user` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `login_Name` (`login_Name`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='用户表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户表';
 
 -- ----------------------------
 -- Table structure for user_article_catetory
 -- ----------------------------
-DROP TABLE IF EXISTS `user_article_catetory`;
-CREATE TABLE `user_article_catetory` (
+DROP TABLE IF EXISTS `article_category`;
+CREATE TABLE `article_category` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL COMMENT '用户id',
-  `category` varchar(20) NOT NULL COMMENT '文章类型',
+  `parent_id` int(11) COMMENT '父类型',
+  `code` varchar(20) NOT NULL COMMENT '文章类型',
+  `name` varchar(20) NOT NULL COMMENT '类型名称',
   `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='用户文章类型表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章类型表';
+
+DROP TABLE IF EXISTS `tag`;
+CREATE TABLE `tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL COMMENT '用户id',
+  `tag` varchar(20) NOT NULL COMMENT '标签类型',
+  `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='标签表';
+
+
+DROP TABLE IF EXISTS `article_tag`;
+CREATE TABLE `article_tag` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL COMMENT '文章id',
+  `tag` varchar(20) NOT NULL COMMENT '标签',
+  `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='文章标签表';
+
+
 
 -- ----------------------------
 -- Table structure for user_extend
@@ -206,7 +232,7 @@ CREATE TABLE `user_extend` (
   `update_by` varchar(20) DEFAULT NULL COMMENT '修改人',
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='用户扩展表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户扩展表';
 
 -- ----------------------------
 -- Table structure for user_follow
@@ -221,7 +247,7 @@ CREATE TABLE `user_follow` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `user_id` (`user_id`,`follow_user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='用户关注表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户关注表';
 
 -- ----------------------------
 -- Table structure for user_follow_article
@@ -235,4 +261,4 @@ CREATE TABLE `user_follow_article` (
   `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8 COMMENT='用户关注文章表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户关注文章表';

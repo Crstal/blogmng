@@ -2,9 +2,12 @@ package com.crystal.blog.dao.mapper;
 
 import com.crystal.blog.dao.mapper.base.BaseMapper;
 import com.crystal.blog.dao.model.Authz;
+import com.crystal.blog.dao.model.AuthzExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 /**
-* Created by Mybatis Generator on 2018/08/09
+* Created by Mybatis Generator on 2018/08/29
 */
-public interface AuthzMapper extends BaseMapper<Authz> {
+public interface AuthzMapper extends BaseMapper<Authz, AuthzExample, Integer> {
 }

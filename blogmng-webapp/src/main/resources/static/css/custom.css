@@ -323,7 +323,7 @@ h6,.page-content h6 a{font-weight: normal; font-style: normal; ;font-family: Ter
     .navbar {margin-top: 0px;padding-top:0px}
 
     
-    #decorative1, #decorative2 {margin-left:-20px;margin-right:-20px;padding-left:}
+    #decorative1, #decorative2 {margin-left:-20px;margin-right:-20px;/*padding-left:*/}
 
     
     #divFooter {margin-left:-20px;margin-right:-20px;padding-left:20px;padding-right:20px;}
@@ -351,6 +351,110 @@ h6,.page-content h6 a{font-weight: normal; font-style: normal; ;font-family: Ter
 
 
 }
-
-
-
+a.btn {
+    margin:4px;
+}
+#zzxx-box {
+    margin: 0;
+    height: 70px;
+    padding: 15px 0;
+    border-bottom: 0px;
+}
+#zzxx-box li {
+    float: left;
+    margin-right: 30px;
+    height: 40px;
+    line-height: 38px;
+    list-style-type:none;
+}
+#zzxx-box li a {
+    color: #999;
+    width: 40px;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    font-size: 1.25em;
+    font-size: 18px;
+}
+#zzxx-box .weixin a:hover {
+    border-color: green;
+    color: #fff;
+    background-color: green;
+}
+#zzxx-box .tqq a:hover {
+    border-color: blue;
+    color: #fff;
+    background-color: blue;
+}
+#zzxx-box .github a:hover {
+    border-color: #000;
+    color: #fff;
+    background-color: #000;
+}
+#loginA:hover{text-decoration:none;}
+#loginA {color:#000;}
+.home-fluid {
+    width: 94%;}
+.expression, .error_text{
+    font-size: 40px; height: 60px;font-weight: 100;
+}
+.form-group{
+    margin: 10px 0 0 20px;
+}
+.form-group-right {
+    float:right; margin-right:20px;
+}
+.col-form-label {
+    width: 80px;
+    float: left;
+}
+.txt-box {
+    width: 470px;
+    float: left;
+}
+.form-check {
+    float:left;margin:4px 7px;
+}
+.required {
+    color: red;
+    margin-left: 6px;
+}
+.select-box{
+    width: 200px;
+    float: left;
+}
+.categorie-list {
+    background:#eee; height:150px;margin:10px 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    clear:both;
+}
+.tags {
+    float:left;margin:0 20px 12px 0;
+}
+.tags a{
+    color:#ccc;
+    margin-left: 2px;
+}
+.tags a:hover {
+    text-decoration: none;
+    color:red;
+}
+.tags input {
+    border: 1px solid #ccc;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.tags span{
+    background:#eee;
+    padding:4px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.btn-add-tag {
+    float: left;
+}

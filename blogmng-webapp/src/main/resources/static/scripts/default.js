@@ -1,21 +1,23 @@
 var navList = [{
     path:'index.html',
     name:'首页',
-    active: true,
-    children:[]
+    active: true
 },{
     path:'index.html',
-    name:'胡侃',
+    name:'博文',
     children:[{
-        path:'index.html',
-        name:'胡侃',
-        children:[]
-    },{
-        path:'index.html',
-        name:'胡侃',
-        children:[]
-    }]
-}];
+            path:'index.html',
+            name:'乱弹'
+        },{
+            path:'index.html',
+            name:'游行'
+        },]
+    }, {
+    path:'index.html',
+    name:'留言区'
+},{
+    path:'index.html',
+    name:'归档'}];
 
 $(document).ready(function () {
     $('iframe').each(function () {/*fix youtube z-index*/

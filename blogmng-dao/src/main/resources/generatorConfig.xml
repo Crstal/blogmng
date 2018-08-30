@@ -10,11 +10,11 @@
         <property name="endingDelimiter" value="`"/>
 
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin"/>
-
-        <plugin type="com.crystal.mybatis.plugin.LombokPlugin"/>
-
-        <!-- 自定义方法 -->
-        <plugin type="com.crystal.mybatis.plugin.IgnorePlugin">
+        <!-- 配置内置的或者自定义的Plugin -->
+        <plugin type="com.crystal.mybatis.plugin.BaseMapperGeneratorPlugin">
+            <property name="rootInterface" value="com.crystal.blog.dao.mapper.base.BaseMapper"/>
+        </plugin>
+        <plugin type="com.crystal.mybatis.plugin.LombokPlugin">
             <property name="ignoreFields" value="id,create_By,create_Time,update_By,update_Time"/>
         </plugin>
 
@@ -48,14 +48,13 @@
         </sqlMapGenerator>
 
         <!-- 生成 java 接口代码,即Mapper  -->
-        <javaClientGenerator type="com.crystal.mybatis.NoExampleJavaMapperGenerator"
+        <javaClientGenerator type="XMLMAPPER"
                              targetPackage="com.crystal.blog.dao.mapper"
                              targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
-            <property name="rootInterface" value="com.crystal.blog.dao.mapper.base.BaseMapper"/>
         </javaClientGenerator>
 
-        <table schema="blog" tableName="article" domainObjectName="Article">
+ <!--       <table schema="blog" tableName="article" domainObjectName="Article">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
@@ -80,7 +79,7 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
         </table>
-        <table schema="blog" tableName="content" domainObjectName="Content">
+        <table schema="blog" tableName="article_content" domainObjectName="ArticleContent">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
@@ -99,12 +98,12 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="sex" jdbcType="TINYINT" javaType="java.lang.Integer"/>
             <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
-        </table>
-        <table schema="blog" tableName="user_article_catetory" domainObjectName="UserArticleCategory">
+        </table>-->
+        <table schema="blog" tableName="article_category" domainObjectName="ArticleCategory">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
-        <table schema="blog" tableName="user_extend" domainObjectName="UserExtend">
+ <!--       <table schema="blog" tableName="user_extend" domainObjectName="UserExtend">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
@@ -116,5 +115,13 @@
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>
+        <table schema="blog" tableName="tag" domainObjectName="Tag">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>
+        <table schema="blog" tableName="article_tag" domainObjectName="ArticleTag">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+        </table>-->
     </context>
 </generatorConfiguration>

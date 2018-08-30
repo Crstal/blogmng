@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>写博客</title>
+        <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
+        <link th:href="@{/scripts/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+        <link th:href="@{/scripts/bootstrap/css/bootstrap-responsive.min.css}" rel="stylesheet">
+        <link rel="stylesheet" th:href="@{/scripts/editor.md-master/css/editormd.min.css}" />
+        <link th:href="@{/css/custom.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/css/popup_layer.css}" rel="stylesheet" type="text/css" />
+    </head>
+    <body>
+        <div id="layout" class="container home-fluid">
+            <div style="height: 20px;"></div>
+            <header>
+                <input id="title" name="title" class="input-xxlarge" type="text" placeholder="标题"/>
+                <div style="float:right">
+                    <input type="button" title="预览" value="预览" id="preViewBtn" class="btn btn-secondary" />
+                    <input type="button" title="发布" value="发布" id="publishBtn" class="btn btn-primary"/>
+                </div>
+            </header>
+            <div id="test-editormd">
+                <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc"></textarea>
+                <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
+                <textarea class="editormd-html-textarea" name="text" id="editormdhtml"></textarea>
+            </div>
+        </div>
+
+        <div id="blk1" class="blk" style="display:none;">
+            <div class="head"><div class="head-right"></div></div>
+            <div class="main" style="height: 340px;">
+                <h2>发布博客</h2>
+                <div class="form-group">
+                    <label class="labTitle col-form-label">文章标签：</label>
+                    <div class="txt-box">
+                        <div class="tag-box d-flex flex-row" id="categorieBox">
+                            <input name="tags" id="hidCategories" value="" type="hidden">
+                            <a href="#" id="addCategorie" class="btn-add-tag">添加新标签</a>
+                        </div>
+                        <div class="categorie-list">
+                            <div class="form-check">
+                                <label class="checkbox inline">
+                                    <input type="checkbox" value="option1" name="category" id="11"> Option 1
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <label class="checkbox inline">
+                                    <input type="checkbox" value="option2" name="category" id="12"> Option 2
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="labTitle col-form-label">博客分类：</label>
+                    <div class="select-box">
+                        <select class="input-medium" id="categoryCode">
+                            <option value="0">选择分类</option>
+                            <option value="28">人工智能</option>
+                        </select>
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <div style="clear:both;"></div>
+                <div class="form-group form-group-right">
+                    <a class="btn btn-secondary" href="#" title="取消" id="close1">取消</a>
+                    <a class="btn btn-secondary" href="#" title="保存为草稿" onclick="submitForm(3)">保存为草稿</a>
+                    <a class="btn btn-primary" href="#" title="发表博客" onclick="submitForm(1)">发表博客</a>
+                </div>
+            </div>
+            <div class="foot"><div class="foot-right"></div></div>
+        </div>
+
+        <script th:src="@{/scripts/jquery.min.js}"></script>
+        <script th:src="@{/scripts/editor.md-master/editormd.min.js}"></script>
+        <script th:src="@{/scripts/browser.js}"></script>
+        <script th:src="@{/scripts/popup_layer.js}"></script>
+        <script type="text/javascript">
+			var testEditor;
+			var hidCategories = [];
+
+            $(function() {
+                testEditor = editormd("test-editormd", {
+                    width   : "100%",
+                    height  : 700,
+                    syncScrolling : "single",
+
+              //      theme        : "lesser-dark",// 工具栏风格
+            //        previewTheme : "dark",// 预览页面风格
+          //          editorTheme  : "paraiso-dark",// 设置编辑页面风格
+                    flowChart : true,//控制流程图编辑
+                    sequenceDiagram : true,//控制时序图编辑
+                    taskList : true,//任务列表
+                    tex  : true,//科学公式
+                    emoji : true,//moji表情
+                    htmlDecode : "style,script,iframe|on*", // 开启 HTML 标签解析，为了安全性，默认不开启
+                    codeFold : true,//ctrl+q代码折叠
+
+                    tocm : true, // Using [TOCM]
+                    path    : "/scripts/editor.md-master/lib/", //你的lib目录的路径
+                    imageUpload : true,
+                    imageFormats : ["jpg","jpeg","gif","png","bmp","webp"],
+                    imageUploadURL : "/uploadimg",
+                    //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
+                    saveHTMLToTextarea : true,
+                    //下面这一行将使用dark主题
+                    // previewTheme : "dark"
+                    onload: function () {
+                        this.width("100%");
+                        this.height($('body').height() - 280);
+                    }
+                });
+
+                // 发布
+                var t9 = new PopupLayer({
+                    trigger:"#publishBtn",
+                    popupBlk:"#blk1",
+                    closeBtn:"#close1",
+                    useOverlay:true,
+                    useFx:true,
+                    offsets:{
+                        x:-300,
+                        y:-41
+                    }
+                });
+                t9.doEffects = function(way){
+                    if(way == "open"){
+                        this.popupLayer.css({opacity:0.3}).show(400,function(){
+                            this.popupLayer.animate({
+                                left:($(document).width() - this.popupLayer.width())/2,
+                                top:(document.documentElement.clientHeight - this.popupLayer.height())/2 + $(document).scrollTop(),
+                                opacity:0.8
+                            },1000,function(){this.popupLayer.css("opacity",1)}.binding(this));
+                        }.binding(this));
+                    }
+                    else{
+                        this.popupLayer.animate({
+                            left:this.trigger.offset().left,
+                            top:this.trigger.offset().top,
+                            opacity:0.1
+                        },{duration:500,complete:function(){this.popupLayer.css("opacity",1);this.popupLayer.hide()}.binding(this)});
+                    }
+                }
+
+                $('#addCategorie').on('click', function() {
+                    $('input[name="newTag"]').parent('.tags').remove();
+
+                    var tagDiv = $('<div class="tags">\n' +
+                        '   <input type="text" name="newTag" style="width:15px"/><a href="javascript:void(0)" title="删除">X</a>\n' +
+                        '</div>');
+                    $(this).before(tagDiv);
+
+                    tagDiv.find('input').focus()
+                        .on('blur', function() {
+                            var val = $(this).val();
+                            if (val && val.length > 0) {
+                                if (addCategory(val, tagDiv)) {
+                                    tagDiv.prepend('<span>' + val + '</span>');
+                                    $(this).remove();
+                                } else {
+                                    tagDiv.remove();
+                                }
+                            } else {
+                                tagDiv.remove();
+                            }
+                        })
+                        .bind("input propertychange",function () {
+                            var val = $(this).val();
+                            var width = val ? (val.length + 1) * 13 : 13;
+                            $(this).width(width);
+                        });
+
+                    bindCategoryDelete();
+                });
+
+                $('.categorie-list input').bind("change",function () {
+                    if ($(this).is(':checked')) {
+                        var tagDiv1 = $('<div class="tags" id="category-' + $(this).attr("id") + '">\n' +
+                            '   <span>' + $(this).val()+ '</span><a href="javascript:void(0)" title="删除">X</a>\n' +
+                            '</div>');
+                        $('#addCategorie').before(tagDiv1);
+
+                        addCategory($(this).val());
+                        bindCategoryDelete();
+                    } else {
+                        removeCategory($(this).val());
+                        $('#category-' + $(this).attr('id')).remove();
+                    }
+                });
+
+            });
+
+            function submitForm(articleStatus) {
+                var htmlco = $("#editormdhtml").val();
+                var data = {
+                    'content': htmlco,
+                    'title': $.trim($('#title').val()),
+                    'categoryCode': $('#categoryCode option:selected').val(),
+                    'categoryName': $('#categoryCode option:selected').text(),
+                    'tags':hidCategories.join(','),
+                    'status': articleStatus
+                }
+                data = $.extend(data, {'content': htmlco});
+                $.post('[[@{/back/article}]]', data, function(data){
+                            alert(data);
+                }, 'json');
+            }
+
+
+            function bindCategoryDelete() {
+                $('.tags a').unbind('click')
+                    .bind('click', function() {
+                        removeCategory($(this).parent().children('span').text());
+                        tagDiv.remove();
+                    });
+            }
+
+            function removeCategory(category) {
+                hidCategories.remove(category);
+                $('#hidCategories').val(hidCategories.join(','));
+            }
+
+            function addCategory(category, tagDiv) {
+                category = $.trim(category);
+                var flag = true;
+                if (tagDiv) {
+                    // 判断是否已经存在该类型
+                    $('.tags span').each(function() {
+                        if ($(this).text() == category) {
+                            flag = false;
+                        }
+                    });
+
+                    $('.categorie-list input').each(function () {
+                        if ($(this).val() == category) {
+                            $(this).prop('checked', 'checked');
+                            tagDiv.attr('id', 'category-' + $(this).attr('id'));
+                        }
+                    });
+                }
+
+                hidCategories.push(category);
+                $('#hidCategories').val(hidCategories.join(','));
+                $('#blk1 .main').height(hidCategories.length/4 * 25 + 340);
+                return flag;
+            }
+
+            Array.prototype.indexOf = function(val) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i] == val) return i;
+                }
+                return -1;
+            };
+
+            Array.prototype.remove = function(val) {
+                var index = this.indexOf(val);
+                if (index > -1) {
+                    this.splice(index, 1);
+                }
+            };
+        </script>
+    </body>
+</html>

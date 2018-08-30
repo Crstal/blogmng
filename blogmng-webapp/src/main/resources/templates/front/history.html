@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="front/layout/layout">
+<!-- layout文件路径-->
+
+<head>
+    <meta charset="utf-8" />
+    <title>蛾子的博客</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body>
+<div layout:fragment="content" >
+    <div class="breadcrumbs">
+        <a href="index.html">首页</a> &nbsp;/&nbsp; <span>归档</span>
+    </div>
+
+    <div class="row-fluid">
+        <div class="span12">
+            <link th:href="@{css/history.css}" rel="stylesheet" />
+            <script th:src="@{/scripts/history.js}" type="text/javascript"></script>
+            <div class="head-warp">
+                <div class="head">
+                    <div class="nav-box">
+                        <ul>
+                            <li class="cur" style="display: none">公司大事记时间轴</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="main">
+                <div class="history">
+                    <div class="history-date">
+                        <ul>
+                            <h2 class="first"><a href="#nogo">2012年</a></h2>
+
+
+                            <li>
+                                <h3>10.08<span>2012</span></h3>
+                                <dl>
+                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
+                                        <span>评论(0)</span>
+                                    </dt>
+                                </dl>
+                            </li>
+
+                            <li>
+                                <h3>07.19<span>2012</span></h3>
+                                <dl>
+                                    <dt><a href="#">升级极速内核到20.0</a>
+                                        <span>HTML5支持度全球最好，达到469分，测试页面： </span>
+                                    </dt>
+                                </dl>
+                            </li>
+
+                            <li>
+                                <h3>07.02<span>2012</span></h3>
+                                <dl>
+                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
+                                        <span>支持网络摄像头，浏览器可直接访问摄像头</span>
+                                    </dt>
+                                </dl>
+                            </li>
+
+                            <li>
+                                <h3>06.27<span>2012</span></h3>
+                                <dl>
+                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
+                                    </dt>
+                                </dl>
+                            </li>
+                            <li>
+                                <h3>06.15<span>2012</span></h3>
+                                <dl>
+                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a></dt>
+                                </dl>
+                            </li>
+                            <li>
+                                <h3>06.05<span>2012</span></h3>
+                                <dl>
+                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
+                                    </dt>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="history-date">
+                        <ul>
+                            <h2 class="date02"><a href="#nogo">2011年</a></h2>
+                            <li>
+                                <h3>12.12<span>2011</span></h3>
+                                <dl>
+                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
+                                        <span>新增对360网购保镖支持，保护网上交易安全</span>
+                                    </dt>
+                                </dl>
+                            </li>
+                            <li>
+                                <h3>11.24<span>2011</span></h3>
+                                <dl>
+                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
+                                        <span>轻松测试浏览器性能</span>
+                                    </dt>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -8,7 +8,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* Created by Mybatis Generator on 2018/08/09
+* Created by Mybatis Generator on 2018/08/29
 */
 @Data
 @Builder
@@ -22,10 +22,16 @@ public class Article extends BaseModel implements Serializable {
     private Integer userId;
 
     /**
-     * 字段：category_id
+     * 字段：category_code
      * 含义：文章类型
      */
-    private Long categoryId;
+    private String categoryCode;
+
+    /**
+     * 字段：category_name
+     * 含义：文章类型
+     */
+    private String categoryName;
 
     /**
      * 字段：title
@@ -61,7 +67,7 @@ public class Article extends BaseModel implements Serializable {
      * 字段：content_id
      * 含义：文章内容id
      */
-    private String contentId;
+    private Integer contentId;
 
     /**
      * 字段：status

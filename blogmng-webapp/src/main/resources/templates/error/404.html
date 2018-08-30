@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8" />
+    <title>错误页面</title>
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
+    <link th:href="@{/scripts/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/scripts/bootstrap/css/bootstrap-responsive.min.css}" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/scripts/editor.md-master/css/editormd.min.css}" />
+    <link th:href="@{/css/custom.css}" rel="stylesheet" type="text/css" />
+</head>
+<body id="pageBody">
+<div id="divBoxed" class="container home-fluid">
+    <div class="transparent-bg" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;zoom: 1;"></div>
+
+    <div th:replace="front/layout/header :: header">
+    </div>
+
+    <div class="contentArea">
+        <div class="divPanel notop page-content">
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="expression">
+                        o(╥﹏╥)o
+                    </div>
+                    <div class="error_text">
+                        404  页面找不到了
+                    </div>
+                    <div class="return">
+                        <a href="#">返回首页</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="front/layout/footer :: footer">
+    </div>
+</div>
+</body>
+</html>

@@ -16,6 +16,8 @@ public enum ErrorCode implements Serializable {
 
     TRANSFORM_ERROR("1003","对象转换异常"),
 
+    UPLOAD_ERROR("1004", "上传失败"),
+
     /**调用异常 */
     SERVICE_REQUEST_REPEAT("1101","重复调用"),
 
