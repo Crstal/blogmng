@@ -14,16 +14,16 @@
         <div id="layout" class="container home-fluid">
             <div style="height: 20px;"></div>
             <header>
-                <input id="title" name="title" class="input-xxlarge" type="text" placeholder="标题"/>
+                <input id="title" name="title" class="input-xxlarge" type="text" placeholder="标题" th:value="${article.title}"/>
                 <div style="float:right">
                     <input type="button" title="预览" value="预览" id="preViewBtn" class="btn btn-secondary" />
                     <input type="button" title="发布" value="发布" id="publishBtn" class="btn btn-primary"/>
                 </div>
             </header>
             <div id="test-editormd">
-                <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc"></textarea>
+                <textarea class="editormd-markdown-textarea" name="test-editormd-markdown-doc" th:utext="${article.content}" id="editormdhtml"></textarea>
                 <!-- 第二个隐藏文本域，用来构造生成的HTML代码，方便表单POST提交，这里的name可以任意取，后台接受时以这个name键为准 -->
-                <textarea class="editormd-html-textarea" name="text" id="editormdhtml"></textarea>
+                <textarea class="editormd-html-textarea" name="text"></textarea>
             </div>
         </div>
 
@@ -35,7 +35,7 @@
                     <label class="labTitle col-form-label">文章标签：</label>
                     <div class="txt-box">
                         <div class="tag-box d-flex flex-row" id="categorieBox">
-                            <input name="tags" id="hidCategories" value="" type="hidden">
+                            <input name="tags" id="hidCategories" value="" type="hidden" th:value="${article.tags}">
                             <a href="#" id="addCategorie" class="btn-add-tag">添加新标签</a>
                         </div>
                         <div class="categorie-list">
@@ -55,7 +55,7 @@
                 <div class="form-group">
                     <label class="labTitle col-form-label">博客分类：</label>
                     <div class="select-box">
-                        <select class="input-medium" id="categoryCode">
+                        <select class="input-medium" id="categoryCode" th:selected="${article.categoryCode}">
                             <option value="0">选择分类</option>
                             <option value="28">人工智能</option>
                         </select>
@@ -77,8 +77,12 @@
         <script th:src="@{/scripts/browser.js}"></script>
         <script th:src="@{/scripts/popup_layer.js}"></script>
         <script type="text/javascript">
+            var hidCategories = [];
+            var tags = '[[${article.tags}]]';
+            if (tags) {
+                hidCategories = tags.split(',');
+            }
 			var testEditor;
-			var hidCategories = [];
 
             $(function() {
                 testEditor = editormd("test-editormd", {
@@ -176,7 +180,7 @@
 
                 $('.categorie-list input').bind("change",function () {
                     if ($(this).is(':checked')) {
-                        var tagDiv1 = $('<div class="tags" id="category-' + $(this).attr("id") + '">\n' +
+                        var tagDiv1 = $('<div class="tags" id="category-' + $(this).val() + '">\n' +
                             '   <span>' + $(this).val()+ '</span><a href="javascript:void(0)" title="删除">X</a>\n' +
                             '</div>');
                         $('#addCategorie').before(tagDiv1);
@@ -185,15 +189,21 @@
                         bindCategoryDelete();
                     } else {
                         removeCategory($(this).val());
-                        $('#category-' + $(this).attr('id')).remove();
+                        $('#category-' + $(this).val()).remove();
                     }
                 });
 
+                // 初始化标签
+                initCategory();
             });
 
+            var articleId = '[[${article.id}]]';
+            var contentId = '[[${article.contentId}]]';
             function submitForm(articleStatus) {
                 var htmlco = $("#editormdhtml").val();
                 var data = {
+                    'id': articleId,
+                    'contentId': contentId,
                     'content': htmlco,
                     'title': $.trim($('#title').val()),
                     'categoryCode': $('#categoryCode option:selected').val(),
@@ -203,7 +213,17 @@
                 }
                 data = $.extend(data, {'content': htmlco});
                 $.post('[[@{/back/article}]]', data, function(data){
-                            alert(data);
+                    if (data.success) {
+                        if (articleStatus == 3) {
+                            alert('保存成功！');
+                            WINDOW.LOCATION.HREF = '/BACK/ARTICLE/' + DATA.DATA;
+                        } else {// 发布成功跳转
+                            alert('发布成功！');
+                            window.location.href = '/front/article/' + data.data;
+                        }
+                    } else {
+                        alert('发布失败');
+                    }
                 }, 'json');
             }
 
@@ -235,7 +255,7 @@
                     $('.categorie-list input').each(function () {
                         if ($(this).val() == category) {
                             $(this).prop('checked', 'checked');
-                            tagDiv.attr('id', 'category-' + $(this).attr('id'));
+                            tagDiv.attr('id', 'category-' + category);
                         }
                     });
                 }
@@ -244,6 +264,18 @@
                 $('#hidCategories').val(hidCategories.join(','));
                 $('#blk1 .main').height(hidCategories.length/4 * 25 + 340);
                 return flag;
+            }
+
+            function initCategory() {
+                if (hidCategories.length > 0) {
+                    for (var i=0; i<hidCategories.length; i++) {
+                        var tagDiv1 = $('<div class="tags" id="category-' + hidCategories[i] + '">\n' +
+                            '   <span>' + hidCategories[i]+ '</span><a href="javascript:void(0)" title="删除">X</a>\n' +
+                            '</div>');
+                        $('#addCategorie').before(tagDiv1);
+                    }
+                    bindCategoryDelete();
+                }
             }
 
             Array.prototype.indexOf = function(val) {

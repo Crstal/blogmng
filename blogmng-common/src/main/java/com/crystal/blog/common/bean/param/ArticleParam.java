@@ -18,7 +18,7 @@ public class ArticleParam implements Serializable {
      * 含义：文章类型
      */
     @NotNull(message = "文章类型不能为空")
-    private Long categoryCode;
+    private String categoryCode;
 
     /**
      * 含义：文章类型
@@ -39,7 +39,7 @@ public class ArticleParam implements Serializable {
     /**
      * 含义：文章内容id
      */
-    private String contentId;
+    private Integer contentId;
 
     /**
      * 文章内容

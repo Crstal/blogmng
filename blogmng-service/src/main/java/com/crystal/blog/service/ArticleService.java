@@ -15,9 +15,9 @@ public interface ArticleService {
      * @param articleParam
      * @return
      */
-    Boolean save(ArticleParam articleParam);
+    Integer save(ArticleParam articleParam);
 
-    ArticleVO queryByPrimaryKey(Integer id);
+    ArticleVO queryDetail(Integer id);
 
 
 }

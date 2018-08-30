@@ -30,7 +30,7 @@ public class ArticleController {
      */
     @GetMapping("{id}")
     public ModelAndView show(@PathVariable(value = "id") Integer id) {
-        ArticleVO articleVO = articleService.queryByPrimaryKey(id);
+        ArticleVO articleVO = articleService.queryDetail(id);
         ModelAndView modelAndView = new ModelAndView("front/article");
         modelAndView.addObject("article", articleVO);
         return modelAndView;

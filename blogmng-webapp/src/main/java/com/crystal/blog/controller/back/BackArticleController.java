@@ -1,13 +1,14 @@
 package com.crystal.blog.controller.back;
 
+import com.crystal.blog.common.bean.Result;
 import com.crystal.blog.common.bean.param.ArticleParam;
-import com.crystal.blog.common.enums.ArticleStatusEnum;
+import com.crystal.blog.common.bean.response.ArticleVO;
 import com.crystal.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
 * @Author: caoyue
@@ -21,9 +22,22 @@ public class BackArticleController {
     @Autowired
     private ArticleService articleService;
 
-    @RequestMapping("")
-    public String toEdit() {
-        return "front/article_edit";
+    /**
+     * 跳转到文章修改页面
+     * @param id
+     * @return
+     */
+    @GetMapping(value = {"{id}", ""})
+    public ModelAndView toEdit(@PathVariable(required = false, value = "id") Integer id) {
+        ArticleVO articleVO = null;
+        if (id == null) {
+            articleVO = new ArticleVO();
+        } else {
+            articleVO = articleService.queryDetail(id);
+        }
+        ModelAndView modelAndView = new ModelAndView("front/article_edit");
+        modelAndView.addObject("article", articleVO);
+        return modelAndView;
     }
 
     /**
@@ -31,12 +45,10 @@ public class BackArticleController {
      * @return
      */
     @RequestMapping(method = RequestMethod.POST)
-    public String save(@Validated ArticleParam articleParam) {
-        articleService.save(articleParam);
-        if (ArticleStatusEnum.PUBLISH.equals(articleParam.getStatus())) {
-            return "front/article";
-        }
-        return "article_edit";
+    @ResponseBody
+    public Result<Integer> save(@Validated ArticleParam articleParam) {
+        Integer id = articleService.save(articleParam);
+       return Result.wrapSuccessfulResult(id);
     }
 
     /**

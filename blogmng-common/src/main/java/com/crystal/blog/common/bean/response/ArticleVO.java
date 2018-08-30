@@ -25,6 +25,9 @@ public class ArticleVO {
      */
     private String categoryName;
 
+    // 标签
+    private String tags;
+
     /**
      * 含义：文章标题
      */
