@@ -1,23 +1,3 @@
-var navList = [{
-    path:'index.html',
-    name:'首页',
-    active: true
-},{
-    path:'index.html',
-    name:'博文',
-    children:[{
-            path:'index.html',
-            name:'乱弹'
-        },{
-            path:'index.html',
-            name:'游行'
-        },]
-    }, {
-    path:'index.html',
-    name:'留言区'
-},{
-    path:'index.html',
-    name:'归档'}];
 
 $(document).ready(function () {
     $('iframe').each(function () {/*fix youtube z-index*/
@@ -31,14 +11,30 @@ $(document).ready(function () {
         }
     });
 
-    $('#nav-div').append(createNav(navList));
+    $.get('/front/categories', {}, function(data) {
+        var navList = [{
+            path:'[[@{}]]',
+            name:'首页',
+            active: true
+        }];
+        var children = [];
+        var blogNav = {path:"/", name:"博文", children: children};
+        if (data.success && data.data) {
+            for (var i=0; i<data.data.length; i++) {
+                children.push({path: "?category=" + data.data[i].code, name:data.data[i].name});
+            }
+        }
+        navList.push(blogNav);
+        navList.push({path:'/front/message', name:'留言区'});
+        navList.push({path:'/front/history', name:'归档'});
 
-    $('.ddmenu li.dropdown').hover(function () {
-        $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn();
-    }, function () {
-        $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut();
-    });
-
+        $('#nav-div').append(createNav(navList));
+        $('.ddmenu li.dropdown').hover(function () {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn();
+        }, function () {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut();
+        });
+    }, 'json');
 });
 
 function createNav(navList, level) {

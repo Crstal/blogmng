@@ -1,14 +1,18 @@
 package com.crystal.blog.controller.back;
 
-import com.crystal.blog.common.bean.Result;
 import com.crystal.blog.common.bean.param.ArticleParam;
+import com.crystal.blog.common.bean.response.ArticleCategoryVO;
 import com.crystal.blog.common.bean.response.ArticleVO;
+import com.crystal.blog.common.bean.response.base.Result;
+import com.crystal.blog.service.ArticleCategoryService;
 import com.crystal.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 /**
 * @Author: caoyue
@@ -21,6 +25,9 @@ public class BackArticleController {
 
     @Autowired
     private ArticleService articleService;
+
+    @Autowired
+    private ArticleCategoryService articleCategoryService;
 
     /**
      * 跳转到文章修改页面
@@ -37,6 +44,8 @@ public class BackArticleController {
         }
         ModelAndView modelAndView = new ModelAndView("front/article_edit");
         modelAndView.addObject("article", articleVO);
+        List<ArticleCategoryVO> categoryList = articleCategoryService.selectCategoryList(null);
+        modelAndView.addObject("categoryList", categoryList);
         return modelAndView;
     }
 

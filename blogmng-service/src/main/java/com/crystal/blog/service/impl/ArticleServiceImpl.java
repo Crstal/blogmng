@@ -1,8 +1,10 @@
 package com.crystal.blog.service.impl;
 
 import com.crystal.blog.common.bean.param.ArticleParam;
+import com.crystal.blog.common.bean.param.ArticleQueryParam;
 import com.crystal.blog.common.bean.response.ArticleVO;
 import com.crystal.blog.common.bean.response.UserVO;
+import com.crystal.blog.common.bean.response.base.PageInfo;
 import com.crystal.blog.common.enums.StatusEnum;
 import com.crystal.blog.common.util.AuthUtil;
 import com.crystal.blog.common.util.BeanUtil;
@@ -12,6 +14,7 @@ import com.crystal.blog.dao.mapper.ArticleTagMapper;
 import com.crystal.blog.dao.mapper.TagMapper;
 import com.crystal.blog.dao.model.*;
 import com.crystal.blog.service.ArticleService;
+import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,15 +56,11 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleContent content = new ArticleContent();
         content.setContent(articleParam.getContent());
         content.setStatus(StatusEnum.NORMAL.getCode());
-        content.setCreateBy(currentUser.getLoginName());
-        content.setUpdateBy(currentUser.getLoginName());
         articleContentMapper.insert(content);
 
         // 保存文章
         Article article = BeanUtil.transfer(articleParam, Article.class);
         article.setContentId(content.getId());
-        article.setCreateBy(currentUser.getLoginName());
-        article.setUpdateBy(currentUser.getLoginName());
         article.setUserId(currentUser.getId());
         articleMapper.insertSelective(article);
 
@@ -79,13 +78,13 @@ public class ArticleServiceImpl implements ArticleService {
     private Boolean updateArticle(ArticleParam articleParam) {
         UserVO currentUser = AuthUtil.getCurrentUser();
         // 保存文章内容
-        ArticleContent content = BeanUtil.transfer(articleParam, ArticleContent.class);
-        content.setUpdateBy(currentUser.getLoginName());
-        articleContentMapper.updateByPrimaryKey(content);
+        ArticleContent content = new ArticleContent();
+        content.setId(articleParam.getContentId());
+        content.setContent(articleParam.getContent());
+        articleContentMapper.updateByPrimaryKeySelective(content);
 
         // 保存文章
         Article article = BeanUtil.transfer(articleParam, Article.class);
-        article.setUpdateBy(currentUser.getLoginName());
         articleMapper.updateByPrimaryKeySelective(article);
 
         // 删除文章标签关联
@@ -115,13 +114,11 @@ public class ArticleServiceImpl implements ArticleService {
                     Tag tagModel = new Tag();
                     tagModel.setTag(tag);
                     tagModel.setUserId(currentUser.getId());
-                    tagModel.setCreateBy(currentUser.getLoginName());
                     tagMapper.insert(tagModel);
                 }
                 ArticleTag articleTag = new ArticleTag();
                 articleTag.setTag(tag);
                 articleTag.setArticleId(articleParam.getId());
-                articleTag.setCreateBy(currentUser.getLoginName());
                 articleTagMapper.insert(articleTag);
             }
         }
@@ -130,9 +127,21 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleVO queryDetail(Integer id) {
         Article article = articleMapper.selectByPrimaryKey(id);
-        ArticleVO result = BeanUtil.transfer(article, ArticleVO.class);
-        ArticleContent content = articleContentMapper.selectByPrimaryKey(article.getContentId());
-        result.setContent(content.getContent());
+        ArticleVO result = null;
+        if (article != null) {
+            result = BeanUtil.transfer(article, ArticleVO.class);
+            ArticleContent content = articleContentMapper.selectByPrimaryKey(article.getContentId());
+            result.setContent(content.getContent());
+        } else {
+            result = new ArticleVO();
+        }
+        return result;
+    }
+
+    @Override
+    public PageInfo<ArticleVO> queryArticleListWithPage(ArticleQueryParam articleQueryParam) {
+        Page<Article> page = articleMapper.queryArticleListWithPage(articleQueryParam);
+        PageInfo<ArticleVO> result = BeanUtil.transferPage(page, ArticleVO.class);
         return result;
     }
 }

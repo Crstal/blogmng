@@ -1,4 +1,4 @@
-package com.crystal.blog.common.bean;
+package com.crystal.blog.common.bean.response.base;
 
 import lombok.Data;
 
@@ -34,7 +34,7 @@ public class Result<T> implements Serializable {
     }
 
 
-    public static <T> Result<T> wrapErrorResult(String errCode,String errMsg) {
+    public static <T> Result<T> wrapErrorResult(String errCode, String errMsg) {
         Result<T> result = new Result<>();
         result.success = false;
         result.code = errCode;
@@ -50,7 +50,7 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-    public static <T> Result<T> wrapSuccessfulResult(T data,long total) {
+    public static <T> Result<T> wrapSuccessfulResult(T data, long total) {
         Result<T> result = new Result<>();
         result.data = data;
         result.success = true;
@@ -59,7 +59,7 @@ public class Result<T> implements Serializable {
         return result;
     }
 
-    public static <T> Result<T> wrapSuccessfulResult(T data,String message) {
+    public static <T> Result<T> wrapSuccessfulResult(T data, String message) {
         Result<T> result = new Result<>();
         result.data = data;
         result.success = true;

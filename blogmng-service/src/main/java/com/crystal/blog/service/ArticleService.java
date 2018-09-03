@@ -1,7 +1,9 @@
 package com.crystal.blog.service;
 
 import com.crystal.blog.common.bean.param.ArticleParam;
+import com.crystal.blog.common.bean.param.ArticleQueryParam;
 import com.crystal.blog.common.bean.response.ArticleVO;
+import com.crystal.blog.common.bean.response.base.PageInfo;
 
 /**
 * @Author: caoyue
@@ -18,6 +20,9 @@ public interface ArticleService {
     Integer save(ArticleParam articleParam);
 
     ArticleVO queryDetail(Integer id);
+
+
+    PageInfo<ArticleVO> queryArticleListWithPage(ArticleQueryParam articleQueryParam);
 
 
 }

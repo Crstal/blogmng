@@ -56,8 +56,7 @@
                     <label class="labTitle col-form-label">博客分类：</label>
                     <div class="select-box">
                         <select class="input-medium" id="categoryCode" th:selected="${article.categoryCode}">
-                            <option value="0">选择分类</option>
-                            <option value="28">人工智能</option>
+                            <option th:each="category,categoryStat : ${categoryList}" th:value="${category.code}" th:text="${category.name}"></option>
                         </select>
                         <span class="required">*</span>
                     </div>
@@ -76,15 +75,17 @@
         <script th:src="@{/scripts/editor.md-master/editormd.min.js}"></script>
         <script th:src="@{/scripts/browser.js}"></script>
         <script th:src="@{/scripts/popup_layer.js}"></script>
-        <script type="text/javascript">
+        <script type="text/javascript" th:inline="javascript">
+            <![CDATA[
             var hidCategories = [];
             var tags = '[[${article.tags}]]';
             if (tags) {
                 hidCategories = tags.split(',');
             }
 			var testEditor;
+            var t9;
 
-            $(function() {
+                $(function() {
                 testEditor = editormd("test-editormd", {
                     width   : "100%",
                     height  : 700,
@@ -117,7 +118,7 @@
                 });
 
                 // 发布
-                var t9 = new PopupLayer({
+                t9 = new PopupLayer({
                     trigger:"#publishBtn",
                     popupBlk:"#blk1",
                     closeBtn:"#close1",
@@ -200,6 +201,7 @@
             var articleId = '[[${article.id}]]';
             var contentId = '[[${article.contentId}]]';
             function submitForm(articleStatus) {
+                t9.close();
                 var htmlco = $("#editormdhtml").val();
                 var data = {
                     'id': articleId,
@@ -216,7 +218,7 @@
                     if (data.success) {
                         if (articleStatus == 3) {
                             alert('保存成功！');
-                            WINDOW.LOCATION.HREF = '/BACK/ARTICLE/' + DATA.DATA;
+                            window.location.href = '/back/article/' + data.data;
                         } else {// 发布成功跳转
                             alert('发布成功！');
                             window.location.href = '/front/article/' + data.data;
@@ -291,6 +293,7 @@
                     this.splice(index, 1);
                 }
             };
+            ]]>
         </script>
     </body>
 </html>

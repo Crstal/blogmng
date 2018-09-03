@@ -18,7 +18,7 @@ public class ArticleVO {
     /**
      * 含义：文章类型
      */
-    private Long categoryCode;
+    private String categoryCode;
 
     /**
      * 含义：文章类型

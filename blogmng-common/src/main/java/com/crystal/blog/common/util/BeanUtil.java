@@ -1,7 +1,9 @@
 package com.crystal.blog.common.util;
 
+import com.crystal.blog.common.bean.response.base.PageInfo;
 import com.crystal.blog.common.enums.ErrorCode;
 import com.crystal.blog.common.exception.BussinessRuntimeException;
+import com.github.pagehelper.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.util.CollectionUtils;
@@ -32,6 +34,14 @@ public class BeanUtil {
             for (BO bo : boList) {
                 result.add(transfer(bo, clazz));
             }
+        }
+        return result;
+    }
+
+    public static <BO, VO> PageInfo<VO> transferPage(Page<BO> boPage, Class<VO> clazz) {
+        PageInfo<VO> result = BeanUtil.transfer(boPage, PageInfo.class);
+        if (!CollectionUtils.isEmpty(boPage.getResult())) {
+            result.setResult(transferList(boPage.getResult(), clazz));
         }
         return result;
     }

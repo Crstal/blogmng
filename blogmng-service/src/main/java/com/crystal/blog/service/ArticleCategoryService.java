@@ -11,7 +11,7 @@ public interface ArticleCategoryService {
      * 查询文章分类
      * @return
      */
-    List<ArticleCategoryVO> selectCategoryList();
+    List<ArticleCategoryVO> selectCategoryList(Integer parentId);
 
     /**
      * 查询当前用户下的所有标签

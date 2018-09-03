@@ -1,8 +1,8 @@
 package com.crystal.blog.controller.front;
 
-import com.crystal.blog.common.bean.Result;
 import com.crystal.blog.common.bean.response.ArticleCategoryVO;
 import com.crystal.blog.common.bean.response.TagVO;
+import com.crystal.blog.common.bean.response.base.Result;
 import com.crystal.blog.service.ArticleCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class CategoryController {
     @GetMapping("categories")
     @ResponseBody
     public Result<List<ArticleCategoryVO>> selectCategoryList() {
-        List<ArticleCategoryVO> result = articleCategoryService.selectCategoryList();
+        List<ArticleCategoryVO> result = articleCategoryService.selectCategoryList(null);
         return Result.wrapSuccessfulResult(result);
     }
 

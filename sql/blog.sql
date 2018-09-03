@@ -119,9 +119,12 @@ CREATE TABLE `comment` (
 DROP TABLE IF EXISTS `article_content`;
 CREATE TABLE `article_content` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `aritcle_id` int(11) NOT NULL COMMENT '关联文章id',
   `content` text COMMENT '内容',
   `status` tinyint(4) DEFAULT NULL COMMENT '状态 1正常 2删除',
+  `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(20) DEFAULT NULL COMMENT '修改人',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='内容表';
 

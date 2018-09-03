@@ -27,8 +27,14 @@ public class ArticleCategoryServiceImpl implements ArticleCategoryService {
     private TagMapper tagMapper;
 
     @Override
-    public List<ArticleCategoryVO> selectCategoryList() {
+    public List<ArticleCategoryVO> selectCategoryList(Integer parentId) {
         ArticleCategoryExample example = new ArticleCategoryExample();
+        ArticleCategoryExample.Criteria criteria = example.createCriteria();
+        if (parentId == null) {
+            criteria.andParentIdIsNull();
+        } else {
+            criteria.andParentIdEqualTo(parentId);
+        }
         List<ArticleCategory> categories = articleCategoryMapper.selectByExample(example);
         List<ArticleCategoryVO> result = BeanUtil.transferList(categories, ArticleCategoryVO.class);
         return result;

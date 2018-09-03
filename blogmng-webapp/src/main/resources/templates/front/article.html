@@ -22,14 +22,9 @@
                 <h1 th:text="${article.title}"> <small>  子标题</small></h1>
                 <p><span th:text="${'时间：'+ article.createTime + ' 访问量：' + article.visitCount}"></span></p>
             </div>
-           <!-- <div id="articleContent" class="contenttext" th:utext="${article.content}">
-            </div>-->
             <div id="articleContent">
                 <textarea id="articleContentText" style="display:none;" name="test-editormd-markdown-doc" th:utext="${article.content}"></textarea>
             </div>
-         <!--   <textarea id="articleContent" style="display:none;" name="editormd-markdown-doc" th:text="${article.content}">
-
-             </textarea>-->
 
             <h3>给我留言</h3>
             <input class="input-xlarge" type="text" placeholder="昵称">&nbsp;<span style="color: red;">*</span>
