@@ -4,6 +4,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 import lombok.Data;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class ArticleVO {
@@ -26,7 +27,7 @@ public class ArticleVO {
     private String categoryName;
 
     // 标签
-    private String tags;
+    private List<TagVO> tags;
 
     /**
      * 含义：文章标题

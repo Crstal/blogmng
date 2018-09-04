@@ -30,9 +30,7 @@ public class Result<T> implements Serializable {
      * the construction method of Result
      */
     public Result() {
-
     }
-
 
     public static <T> Result<T> wrapErrorResult(String errCode, String errMsg) {
         Result<T> result = new Result<>();
@@ -47,6 +45,9 @@ public class Result<T> implements Serializable {
         result.data = data;
         result.success = true;
         result.code = SUCCESS_CODE;
+        if (data instanceof PageInfo) {
+            result.total = ((PageInfo) data).getTotal();
+        }
         return result;
     }
 
@@ -65,6 +66,9 @@ public class Result<T> implements Serializable {
         result.success = true;
         result.message = message;
         result.code = SUCCESS_CODE;
+        if (data instanceof PageInfo) {
+            result.total = ((PageInfo) data).getTotal();
+        }
         return result;
     }
 }

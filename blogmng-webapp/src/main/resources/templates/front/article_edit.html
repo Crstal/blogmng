@@ -75,25 +75,24 @@
         <script th:src="@{/scripts/editor.md-master/editormd.min.js}"></script>
         <script th:src="@{/scripts/browser.js}"></script>
         <script th:src="@{/scripts/popup_layer.js}"></script>
-        <script type="text/javascript" th:inline="javascript">
-            <![CDATA[
+        <script type="text/javascript">
             var hidCategories = [];
             var tags = '[[${article.tags}]]';
             if (tags) {
                 hidCategories = tags.split(',');
             }
-			var testEditor;
+            var testEditor;
             var t9;
 
-                $(function() {
+            $(function() {
                 testEditor = editormd("test-editormd", {
                     width   : "100%",
                     height  : 700,
                     syncScrolling : "single",
 
-              //      theme        : "lesser-dark",// 工具栏风格
-            //        previewTheme : "dark",// 预览页面风格
-          //          editorTheme  : "paraiso-dark",// 设置编辑页面风格
+                    //      theme        : "lesser-dark",// 工具栏风格
+                    //        previewTheme : "dark",// 预览页面风格
+                    //          editorTheme  : "paraiso-dark",// 设置编辑页面风格
                     flowChart : true,//控制流程图编辑
                     sequenceDiagram : true,//控制时序图编辑
                     taskList : true,//任务列表
@@ -279,21 +278,6 @@
                     bindCategoryDelete();
                 }
             }
-
-            Array.prototype.indexOf = function(val) {
-                for (var i = 0; i < this.length; i++) {
-                    if (this[i] == val) return i;
-                }
-                return -1;
-            };
-
-            Array.prototype.remove = function(val) {
-                var index = this.indexOf(val);
-                if (index > -1) {
-                    this.splice(index, 1);
-                }
-            };
-            ]]>
         </script>
     </body>
 </html>

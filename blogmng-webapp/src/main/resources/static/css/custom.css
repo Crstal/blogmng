@@ -458,3 +458,17 @@ a.btn {
 .btn-add-tag {
     float: left;
 }
+.pagination .current a{
+    color:#000;
+}
+.pagination .current a:hover{
+    background-color: #ddd;
+}
+.article-tag {
+    margin:0 20px 8px 0;
+    cursor: pointer;
+}
+.article-tag:hover{
+    background-color: #ddd;
+    color: #000;
+}

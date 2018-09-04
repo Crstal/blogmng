@@ -1,9 +1,11 @@
 package com.crystal.blog.common.bean.param;
 
 import com.crystal.blog.common.bean.param.base.PageParam;
+import lombok.Data;
 
 import javax.validation.constraints.NotNull;
 
+@Data
 public class ArticleQueryParam extends PageParam {
 
     /**
@@ -15,6 +17,8 @@ public class ArticleQueryParam extends PageParam {
      * 含义：文章类型
      */
     private String categoryCode;
+
+    private String categoryName;
 
     /**
      * 标签

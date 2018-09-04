@@ -3,6 +3,7 @@ package com.crystal.blog.controller.front;
 import com.crystal.blog.common.bean.param.ArticleQueryParam;
 import com.crystal.blog.common.bean.response.ArticleVO;
 import com.crystal.blog.common.bean.response.base.PageInfo;
+import com.crystal.blog.common.bean.response.base.Result;
 import com.crystal.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,8 +45,9 @@ public class ArticleController {
      */
     @ResponseBody
     @GetMapping("/articles")
-    public PageInfo<ArticleVO> queryListWithPage(ArticleQueryParam param) {
-        return articleService.queryArticleListWithPage(param);
+    public Result<PageInfo<ArticleVO>> queryListWithPage(ArticleQueryParam param) {
+        PageInfo<ArticleVO> articleVOPageInfo = articleService.queryArticleListWithPage(param);
+        return Result.wrapSuccessfulResult(articleVOPageInfo);
     }
 
 }

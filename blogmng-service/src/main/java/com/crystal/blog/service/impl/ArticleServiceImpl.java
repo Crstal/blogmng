@@ -3,11 +3,13 @@ package com.crystal.blog.service.impl;
 import com.crystal.blog.common.bean.param.ArticleParam;
 import com.crystal.blog.common.bean.param.ArticleQueryParam;
 import com.crystal.blog.common.bean.response.ArticleVO;
+import com.crystal.blog.common.bean.response.TagVO;
 import com.crystal.blog.common.bean.response.UserVO;
 import com.crystal.blog.common.bean.response.base.PageInfo;
 import com.crystal.blog.common.enums.StatusEnum;
 import com.crystal.blog.common.util.AuthUtil;
 import com.crystal.blog.common.util.BeanUtil;
+import com.crystal.blog.common.util.StringUtil;
 import com.crystal.blog.dao.mapper.ArticleContentMapper;
 import com.crystal.blog.dao.mapper.ArticleMapper;
 import com.crystal.blog.dao.mapper.ArticleTagMapper;
@@ -18,7 +20,10 @@ import com.github.pagehelper.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
+
+import java.util.List;
 
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
@@ -132,6 +137,12 @@ public class ArticleServiceImpl implements ArticleService {
             result = BeanUtil.transfer(article, ArticleVO.class);
             ArticleContent content = articleContentMapper.selectByPrimaryKey(article.getContentId());
             result.setContent(content.getContent());
+
+            ArticleTagExample articleTagExample = new ArticleTagExample();
+            articleTagExample.createCriteria().andArticleIdEqualTo(id);
+            List<ArticleTag> tags = articleTagMapper.selectByExample(articleTagExample);
+            List<TagVO> tagVos = BeanUtil.transferList(tags, TagVO.class);
+            result.setTags(tagVos);
         } else {
             result = new ArticleVO();
         }
@@ -140,8 +151,26 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public PageInfo<ArticleVO> queryArticleListWithPage(ArticleQueryParam articleQueryParam) {
+        UserVO userVO = AuthUtil.getCurrentUser();
+        if (userVO != null) {
+            articleQueryParam.setUserId(userVO.getId());
+        }
         Page<Article> page = articleMapper.queryArticleListWithPage(articleQueryParam);
         PageInfo<ArticleVO> result = BeanUtil.transferPage(page, ArticleVO.class);
+        // 查询文章内容
+        if (!CollectionUtils.isEmpty(result.getResult())) {
+            for (ArticleVO articleVO: result.getResult()) {
+                ArticleTagExample articleTagExample = new ArticleTagExample();
+                articleTagExample.createCriteria().andArticleIdEqualTo(articleVO.getId());
+                List<ArticleTag> tags = articleTagMapper.selectByExample(articleTagExample);
+                List<TagVO> tagVos = BeanUtil.transferList(tags, TagVO.class);
+                articleVO.setTags(tagVos);
+//                ArticleContent content = articleContentMapper.selectByPrimaryKey(articleVO.getContentId());
+//                int linePosition = StringUtil.getCharacterPosition(content.getContent(), 4, "\n");
+//                articleVO.setContent(linePosition > 0 ? content.getContent().substring(0, linePosition) : content.getContent());
+
+            }
+        }
         return result;
     }
 }
