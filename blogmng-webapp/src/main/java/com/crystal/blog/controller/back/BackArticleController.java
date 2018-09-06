@@ -3,6 +3,7 @@ package com.crystal.blog.controller.back;
 import com.crystal.blog.common.bean.param.ArticleParam;
 import com.crystal.blog.common.bean.response.ArticleCategoryVO;
 import com.crystal.blog.common.bean.response.ArticleVO;
+import com.crystal.blog.common.bean.response.TagVO;
 import com.crystal.blog.common.bean.response.base.Result;
 import com.crystal.blog.service.ArticleCategoryService;
 import com.crystal.blog.service.ArticleService;
@@ -42,10 +43,13 @@ public class BackArticleController {
         } else {
             articleVO = articleService.queryDetail(id);
         }
+        List<ArticleCategoryVO> categoryList = articleCategoryService.selectCategoryList(null);
+        List<TagVO> tagList = articleCategoryService.selectTagList();
+
         ModelAndView modelAndView = new ModelAndView("front/article_edit");
         modelAndView.addObject("article", articleVO);
-        List<ArticleCategoryVO> categoryList = articleCategoryService.selectCategoryList(null);
         modelAndView.addObject("categoryList", categoryList);
+        modelAndView.addObject("tagList", tagList);
         return modelAndView;
     }
 

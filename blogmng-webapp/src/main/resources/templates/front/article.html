@@ -20,7 +20,7 @@
         <div class="span12">
             <div class="page-header" style="text-align: center;">
                 <h1 th:text="${article.title}"> <small>  子标题</small></h1>
-                <p><span th:text="${'时间：'+ article.createTime + ' 访问量：' + article.visitCount}"></span></p>
+                <p><span th:text="${'时间：'+ #dates.format(article.createTime, 'yyyy-MM-dd') + ' 访问量：' + article.visitCount}"></span></p>
             </div>
             <div id="articleContent">
                 <textarea id="articleContentText" style="display:none;" name="test-editormd-markdown-doc" th:utext="${article.content}"></textarea>

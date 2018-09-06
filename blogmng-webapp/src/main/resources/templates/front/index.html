@@ -13,7 +13,7 @@
 <body>
 <div layout:fragment="content" >
     <div class="breadcrumbs">
-        <a th:href="@{/}">首页</a>  <span th:if="${articleParam.categoryCode} != null">&nbsp;/&nbsp;博文</span>
+        <a th:href="@{/}">首页</a>  <span id="categoryName"></span>
     </div>
 
   <!--  <script th:src="@{/scripts/editor.md-master/lib/marked.min.js}"></script>
@@ -26,17 +26,13 @@
     <script th:src="@{/scripts/editor.md-master/editormd.js}"></script>-->
     <script type="text/javascript" th:inline="javascript">
 
-        var basePath = $('meta[name=context-path]').attr("content");
-
         var tagClass = ["badge", "badge badge-success", "badge badge-warning", "badge badge-important", "badge badge-info", "badge badge-inverse"];
         var categoryCode = [[${articleParam.categoryCode==null?"":articleParam.categoryCode}]];
-        var tag = [[${articleParam.tag==null?"":articleParam.tag}]];
-        var articleListParam = {"pageSize":2};
+        var articleListParam = {"pageSize":10};
         if (categoryCode) {
-            articleListParam.categoryCode = categoryCode;
-        }
-        if (tag) {
-            articleListParam.tag = tag;
+            articleListParam.categoryCode = decodeURIComponent(categoryCode);
+            var categoryName = [[${articleParam.categoryName==null?"":articleParam.categoryName}]];
+            $('#categoryName').html('&nbsp;>&nbsp;' + categoryName);
         }
         var showPageNum = 5;// 显示分页按钮数
 
@@ -52,19 +48,19 @@
          */
         function addArticleList(pageNum) {
             articleListParam.pageNum = pageNum;
-            $.get(basePath + 'front/articles', articleListParam, function (data) {
+            $.get(basePath + 'articles', articleListParam, function (data) {
 
                 if (data.success) {
                     var html = [];
                     if (data.total > 0) {
                         var dd = data.data.result;
                         for (var i=0; i<dd.length; i++) {
-                            html.push('<h4><a href="'+basePath+'front/article/' + dd[i].id + '">' + dd[i].title + '</a></h4>');
+                            html.push('<h4><a href="'+basePath+'article/' + dd[i].id + '">' + dd[i].title + '</a></h4>');
                             html.push('<p>');
                             var tags = dd[i].tags;
                             if (tags && tags.length > 0) {
                                 for (var j=0; j<tags.length; j++) {
-                                    html.push('<span class="article-tag '+tagClass[j%tagClass.length]+'" onclick="articleListParam.tag=\''+tags[j].tag+'\';addArticleList(1)">'+tags[j].tag+'</span>');
+                                    html.push('<span class="article-tag '+tagClass[j%tagClass.length]+'" onclick="showArticleList(null, \''+tags[j].tag+'\');">'+tags[j].tag+'</span>');
                                 }
                             }
 
@@ -76,7 +72,7 @@
                             // html.push('<i class="general foundicon-heart"></i>&nbsp;' + dd[i].categoryName + '&nbsp;&nbsp;');
                             html.push('<i class="fa fa-eye""></i>&nbsp;阅读(' + dd[i].visitCount + ')&nbsp;&nbsp;');
                             html.push('<i class="general foundicon-edit""></i>&nbsp;评论(' + dd[i].commentCount + ')&nbsp;&nbsp;');
-                            html.push('<a href="'+basePath+'front/article/' + dd[i].id + '">阅读全文 »</a></p>');
+                            html.push('<a href="'+basePath+'article/' + dd[i].id + '">阅读全文 »</a></p>');
                             if (i != dd.length) {
                                 html.push('<hr/>')
                             }
@@ -150,16 +146,43 @@
         }
         
         function showMyTags() {
-            $.get(basePath + 'front/tags', {}, function (data) {
+            $.get(basePath + 'tags', {}, function (data) {
                 if (data.success) {
                     var myTagHtml = [];
                     var dd = data.data;
                     for (var i=0; i<dd.length; i++) {
-                        myTagHtml.push('<span class="article-tag '+tagClass[i%tagClass.length]+'" onclick="articleListParam.tag=\''+dd[i].tag+'\';addArticleList(1)">'+dd[i].tag+'</span>');
+                        myTagHtml.push('<span class="article-tag '+tagClass[i%tagClass.length]+'" onclick="showArticleList(null, \''+dd[i].tag+'\');">'+dd[i].tag+'</span>');
                     }
                     $('#myTags').html(myTagHtml.join(''));
                 }
             });
+        }
+
+        function showArticleList(category, tag, search, categoryName) {
+            articleListParam = {
+                "pageSize":10
+            };
+            if (category) {
+                articleListParam.categoryCode = category;
+            }
+            if (tag) {
+                articleListParam.tag = tag;
+            }
+            if (search) {
+                articleListParam.search = search;
+            } else {
+                $('#search').val('');
+            }
+            if (categoryName) {
+                $('#categoryName').html('&nbsp;>&nbsp;' + categoryName);
+            } else {
+                $('#categoryName').html('');
+            }
+            addArticleList(1);
+        }
+        
+        function searchArticle() {
+            showArticleList(null, null, $.trim($('#search').val()));
         }
     </script>
     <div class="row-fluid">
@@ -187,7 +210,7 @@
         <div class="span4">
 
             <div class="input-append">
-                <input class="span9" id="appendedInputButton" size="16" type="text" placeholder="站内搜索"><button class="btn" type="button">Go!</button>
+                <input class="span9" id="search" size="16" type="text" placeholder="站内搜索"><button class="btn" type="button" onclick="searchArticle()">Go!</button>
             </div>
             <br/>
 
@@ -205,24 +228,17 @@
             <br />
 
             <h3>热门文章</h3>
-            <ol>
-                <li><a href="#"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                    <i class="fa fa-eye"></i>&nbsp;阅读（0）&nbsp;&nbsp;</li>
-                <li><a href="#"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                    <i class="fa fa-eye"></i>&nbsp;阅读（0）&nbsp;&nbsp;</li>
-                <li><a href="#"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                    <i class="fa fa-eye"></i>&nbsp;阅读（0）&nbsp;&nbsp;</li>
+            <ol id="hotArticle">
+                <li th:each="hotArticle: ${hotArticleList}"><a th:href="@{'/article/'+${hotArticle.id}}" th:text="${hotArticle.title}"></a>
+                    <i class="fa fa-eye"></i>&nbsp;<i th:text="'阅读（' + ${hotArticle.visitCount} + '）'"></i>&nbsp;&nbsp;</li>
+
             </ol>
             <br />
 
             <h3>最新文章</h3>
-            <ol>
-                <li><a href="#"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                    <i class="fa fa-calendar"></i>&nbsp;2018-01-01&nbsp;&nbsp;</li>
-                <li><a href="#"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                    <i class="fa fa-calendar"></i>&nbsp;2018-01-01&nbsp;&nbsp;</li>
-                <li><a href="#"> Lorem Ipsum is simply dummy text of the printing and typesetting industry.</a>
-                    <i class="fa fa-calendar"></i>&nbsp;2018-01-01&nbsp;&nbsp;</li>
+            <ol id="newArticle">
+                <li th:each="newArticle: ${newArticleList}"><a th:href="@{'/article/'+${newArticle.id}}" th:text="${newArticle.title}"></a>
+                    <i class="fa fa-calendar"></i>&nbsp;<i th:text="${#dates.format(newArticle.createTime, 'yyyy-MM-dd')}"></i>&nbsp;&nbsp;</li>
             </ol>
             <br>
 

@@ -29,6 +29,8 @@ public class ArticleVO {
     // 标签
     private List<TagVO> tags;
 
+    private String tagsStr;
+
     /**
      * 含义：文章标题
      */

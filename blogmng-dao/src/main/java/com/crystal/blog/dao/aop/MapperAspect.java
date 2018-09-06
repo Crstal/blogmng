@@ -55,7 +55,7 @@ public class MapperAspect {
         }
     }
 
-    @Before("execution(* com.crystal.blog.dao.mapper.*.*WithPage(..))") //6:直接拦截方法名
+   /* @Before("execution(* com.crystal.blog.dao.mapper.*.*WithPage(..))") //6:直接拦截方法名
     public void queryPageBefore(JoinPoint joinPoint) {
         Object[] args = joinPoint.getArgs();
         if (args != null && args.length > 0) {
@@ -65,31 +65,19 @@ public class MapperAspect {
                 log.info("分页查询{}参数{}", joinPoint.getSignature().getName(), pageParam);
             }
         }
-    }
+    }*/
 
-    /*@Around("execution(* com.crystal.blog.dao.mapper.*.*WithPage(..))")
+  /*  @Around("execution(* com.crystal.blog.dao.mapper.*.*WithPage(..))")
     public Object processTx(ProceedingJoinPoint joinPoint) throws Throwable {
-
         Object[] args = joinPoint.getArgs();
-        PageParam pageParam = null;
         if (args != null && args.length > 0) {
             if (args[0] instanceof PageParam) {
-                pageParam = (PageParam) args[0];
+                PageParam pageParam = (PageParam) args[0];
                 PageHelper.startPage(pageParam.getOffset(), pageParam.getPageSize());
+                log.info("分页查询{}参数{}", joinPoint.getSignature().getName(), pageParam);
             }
         }
         Object rvt = joinPoint.proceed();
-        if (args != null && args.length > 0) {
-            if (args[0] instanceof PageParam) {
-                log.info("分页查询{}参数{},结果：{}", joinPoint.getSignature().getName(), pageParam, rvt);
-                if(rvt != null && rvt instanceof Page) {
-                    Page page = (Page) rvt;
-                    PageInfo result = BeanUtil.transfer(rvt, PageInfo.class);
-                    result.setResult(page.getResult());
-                    return result;
-                }
-            }
-        }
         return rvt;
     }*/
 

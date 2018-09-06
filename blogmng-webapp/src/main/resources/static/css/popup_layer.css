@@ -6,7 +6,7 @@ a.closeBtn{position:absolute;top:10px;right:10px;display:block;width:60px;paddin
 a.closeBtn:hover{color:#fff;border:1px solid #85B6E2;background:#85B6E2;}
 
 body{padding:10px 20px 200px;}
-h1{color:#85B6E2;text-align:center;padding-top:20px;}
+/*h1{color:#85B6E2;text-align:center;padding-top:20px;}*/
 .example{border:1px dashed #ccc;padding:40px;margin-top:10px;zoom:1;}
 .example .description{color:#85B6E2;float:left;padding:10px 20px 0 80px;font-size:20px;}
 .example .tigger{display:block;width:80px;padding:10px;text-align:center;background:#fff;border:1px solid #999;color:#333;cursor:pointer;float:left;}
@@ -36,4 +36,5 @@ h1{color:#85B6E2;text-align:center;padding-top:20px;}
 	width:expression(this.previousSibling.style.width);
 	height:expression(this.previousSibling.style.height);
 }
+#blk1 h2{margin:0}
 

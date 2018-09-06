@@ -2,13 +2,14 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
         <meta charset="utf-8" />
+        <meta name="context-path" th:content="@{/}"/>
         <title>写博客</title>
         <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
+        <link th:href="@{/css/popup_layer.css}" rel="stylesheet" type="text/css" />
         <link th:href="@{/scripts/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
         <link th:href="@{/scripts/bootstrap/css/bootstrap-responsive.min.css}" rel="stylesheet">
         <link rel="stylesheet" th:href="@{/scripts/editor.md-master/css/editormd.min.css}" />
         <link th:href="@{/css/custom.css}" rel="stylesheet" type="text/css" />
-        <link th:href="@{/css/popup_layer.css}" rel="stylesheet" type="text/css" />
     </head>
     <body>
         <div id="layout" class="container home-fluid">
@@ -35,18 +36,13 @@
                     <label class="labTitle col-form-label">文章标签：</label>
                     <div class="txt-box">
                         <div class="tag-box d-flex flex-row" id="categorieBox">
-                            <input name="tags" id="hidCategories" value="" type="hidden" th:value="${article.tags}">
+                            <input name="tags" id="hidCategories" value="" type="hidden" th:value="${article.tagsStr}">
                             <a href="#" id="addCategorie" class="btn-add-tag">添加新标签</a>
                         </div>
                         <div class="categorie-list">
-                            <div class="form-check">
+                            <div class="form-check" th:each="tag: ${tagList}">
                                 <label class="checkbox inline">
-                                    <input type="checkbox" value="option1" name="category" id="11"> Option 1
-                                </label>
-                            </div>
-                            <div class="form-check">
-                                <label class="checkbox inline">
-                                    <input type="checkbox" value="option2" name="category" id="12"> Option 2
+                                    <input type="checkbox" name="category" th:id="${tag.id}" th:value="${tag.tag}"><span th:text="${tag.tag}"></span>
                                 </label>
                             </div>
                         </div>
@@ -76,8 +72,9 @@
         <script th:src="@{/scripts/browser.js}"></script>
         <script th:src="@{/scripts/popup_layer.js}"></script>
         <script type="text/javascript">
+            var basePath = $('meta[name=context-path]').attr("content");
             var hidCategories = [];
-            var tags = '[[${article.tags}]]';
+            var tags = '[[${article.tagsStr}]]';
             if (tags) {
                 hidCategories = tags.split(',');
             }
@@ -217,10 +214,10 @@
                     if (data.success) {
                         if (articleStatus == 3) {
                             alert('保存成功！');
-                            window.location.href = '/back/article/' + data.data;
+                            window.location.href = basePath + 'back/article/' + data.data;
                         } else {// 发布成功跳转
                             alert('发布成功！');
-                            window.location.href = '/front/article/' + data.data;
+                            window.location.href = basePath + 'article/' + data.data;
                         }
                     } else {
                         alert('发布失败');
@@ -232,8 +229,10 @@
             function bindCategoryDelete() {
                 $('.tags a').unbind('click')
                     .bind('click', function() {
-                        removeCategory($(this).parent().children('span').text());
-                        tagDiv.remove();
+                        var tag = $(this).parent().children('span').text();
+                        removeCategory(tag);
+                        $(this).parent().remove();
+                        $('input[value="'+tag+'"]').prop('checked', false);
                     });
             }
 
@@ -278,6 +277,20 @@
                     bindCategoryDelete();
                 }
             }
+
+            Array.prototype.indexOf = function(val) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i] == val) return i;
+                }
+                return -1;
+            };
+
+            Array.prototype.remove = function(val) {
+                var index = this.indexOf(val);
+                if (index > -1) {
+                    this.splice(index, 1);
+                }
+            };
         </script>
     </body>
 </html>

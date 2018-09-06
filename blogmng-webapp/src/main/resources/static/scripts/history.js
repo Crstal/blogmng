@@ -164,12 +164,13 @@
       $targetA = $warpEle.find("h2 a,ul li dl dt a"),
       parentH,
       eleTop = [];
-    parentH = $warpEle.parent().height();
+      console.log();
+    parentH = $warpEle.find('li').length * 95 + 140;
+      console.log($warpEle.find('li').length);
     $warpEle.parent().css({
       "height":59
     });
     setTimeout(function () {
-
       $warpEle.find("ul").children(":not('h2:first')").each(function (idx) {
         eleTop.push($(this).position().top);
         $(this).css({
@@ -192,7 +193,7 @@
         });
     }, 600);
 
-      $targetA.unbind("click");
+      /*$targetA.unbind("click");
       $targetA.bind("click", function () {
           $(this).parent().css({
               "position":"relative"
@@ -200,6 +201,20 @@
           $(this).parent().siblings().slideToggle();
           $warpEle.parent().removeAttr("style");
           return false;
+      });*/
+      $targetA.unbind("click");
+      $targetA.bind("click", function () {
+          $('#yearList').css('display', 'block');
+      });
+      $(document).bind('click', function(e) {
+        if ($(e.target).attr('id') != 'yearA') {
+            $('#yearList').css('display', 'none');
+        }
+      });
+      $('#yearList').children()
+          .unbind('click')
+          .bind('click', function() {
+            window.location.href = basePath + "history/" + $(this).attr('id').split('-')[1];
       });
   };
 })(jQuery);

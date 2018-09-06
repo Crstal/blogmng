@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@RequestMapping("/front")
+@RequestMapping("")
 @Controller
 public class CategoryController {
 

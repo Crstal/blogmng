@@ -18,8 +18,7 @@
 
     <div class="row-fluid">
         <div class="span12">
-            <link th:href="@{css/history.css}" rel="stylesheet" />
-            <script th:src="@{/scripts/history.js}" type="text/javascript"></script>
+            <link th:href="@{/css/history.css}" rel="stylesheet" />
             <div class="head-warp">
                 <div class="head">
                     <div class="nav-box">
@@ -33,74 +32,15 @@
                 <div class="history">
                     <div class="history-date">
                         <ul>
-                            <h2 class="first"><a href="#nogo">2012年</a></h2>
-
-
-                            <li>
-                                <h3>10.08<span>2012</span></h3>
+                            <h2 class="first"><a href="javascript:void(0)" id="yearA" th:text="${year}"></a></h2>
+                            <div class="popover fade left in" id="yearList">
+                                <div th:each="year: ${years}" th:text="${year}" th:id="${'year-' + year}"></div>
+                            </div>
+                            <li th:each="article: ${articleVOS}">
+                                <h3 th:utext="${#dates.format(article.createTime, 'MM.dd') + '<span>' + #dates.format(article.createTime, 'yyyy') + '</span>'}"></h3>
                                 <dl>
-                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
-                                        <span>评论(0)</span>
-                                    </dt>
-                                </dl>
-                            </li>
-
-                            <li>
-                                <h3>07.19<span>2012</span></h3>
-                                <dl>
-                                    <dt><a href="#">升级极速内核到20.0</a>
-                                        <span>HTML5支持度全球最好，达到469分，测试页面： </span>
-                                    </dt>
-                                </dl>
-                            </li>
-
-                            <li>
-                                <h3>07.02<span>2012</span></h3>
-                                <dl>
-                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
-                                        <span>支持网络摄像头，浏览器可直接访问摄像头</span>
-                                    </dt>
-                                </dl>
-                            </li>
-
-                            <li>
-                                <h3>06.27<span>2012</span></h3>
-                                <dl>
-                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
-                                    </dt>
-                                </dl>
-                            </li>
-                            <li>
-                                <h3>06.15<span>2012</span></h3>
-                                <dl>
-                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a></dt>
-                                </dl>
-                            </li>
-                            <li>
-                                <h3>06.05<span>2012</span></h3>
-                                <dl>
-                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
-                                    </dt>
-                                </dl>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="history-date">
-                        <ul>
-                            <h2 class="date02"><a href="#nogo">2011年</a></h2>
-                            <li>
-                                <h3>12.12<span>2011</span></h3>
-                                <dl>
-                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
-                                        <span>新增对360网购保镖支持，保护网上交易安全</span>
-                                    </dt>
-                                </dl>
-                            </li>
-                            <li>
-                                <h3>11.24<span>2011</span></h3>
-                                <dl>
-                                    <dt><a href="#">发布全新的极速浏览器6.0版本</a>
-                                        <span>轻松测试浏览器性能</span>
+                                    <dt><a th:href="@{'/article/'+${article.id}}" th:text="${article.title}"></a>
+                                        <span th:text="${'评论(' + article.commentCount + ')'}"></span>
                                     </dt>
                                 </dl>
                             </li>
@@ -110,6 +50,7 @@
             </div>
         </div>
     </div>
+    <script th:src="@{/scripts/history.js}" type="text/javascript"></script>
 </div>
 </body>
 </html>

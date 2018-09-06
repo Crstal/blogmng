@@ -440,12 +440,25 @@
         and a.status = #{status,jdbcType=TINYINT}
       </if>
       <if test="search != null">
-        and title like #{search,jdbcType=VARCHAR}
+        and title like CONCAT('%',#{search},'%')
       </if>
       <if test="tag != null">
         and b.tag = #{tag,jdbcType=VARCHAR}
       </if>
     </trim>
     order by a.update_time desc, a.create_time desc
+  </select>
+
+  <!--  查询热门文章        -->
+  <select id="queryHotArticleList" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
+    a.id, a.user_id, a.category_code, a.category_name, a.title, a.follow_count, a.comment_count, a.content_id, a.status, a.visit_count, a.create_by, a.create_time, a.update_by, a.update_time
+    from article a
+    where a.status=1
+    <if test="userId != null">
+      and a.user_id = #{userId,jdbcType=INTEGER}
+    </if>
+    order by a.visit_count desc
+    limit 0,5
   </select>
 </mapper>

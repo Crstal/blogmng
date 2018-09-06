@@ -4,6 +4,7 @@ import com.crystal.blog.common.bean.param.ArticleQueryParam;
 import com.crystal.blog.common.bean.response.ArticleVO;
 import com.crystal.blog.common.bean.response.base.PageInfo;
 import com.crystal.blog.common.bean.response.base.Result;
+import com.crystal.blog.common.enums.ArticleStatusEnum;
 import com.crystal.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 * @Date: 17:24 2018/8/27
 **/
 @Controller
-@RequestMapping("/front")
+@RequestMapping("")
 public class ArticleController {
 
     @Autowired
@@ -30,7 +31,7 @@ public class ArticleController {
      * @param id
      * @return
      */
-    @GetMapping("/article/{id}")
+    @GetMapping("article/{id}")
     public ModelAndView show(@PathVariable(value = "id") Integer id) {
         ArticleVO articleVO = articleService.queryDetail(id);
         ModelAndView modelAndView = new ModelAndView("front/article");
@@ -44,8 +45,9 @@ public class ArticleController {
      * @return
      */
     @ResponseBody
-    @GetMapping("/articles")
+    @GetMapping("articles")
     public Result<PageInfo<ArticleVO>> queryListWithPage(ArticleQueryParam param) {
+        param.setStatus(ArticleStatusEnum.PUBLISH.getCode());
         PageInfo<ArticleVO> articleVOPageInfo = articleService.queryArticleListWithPage(param);
         return Result.wrapSuccessfulResult(articleVOPageInfo);
     }

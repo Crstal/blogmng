@@ -1,3 +1,4 @@
+var basePath = $('meta[name=context-path]').attr("content");
 
 $(document).ready(function () {
     $('iframe').each(function () {/*fix youtube z-index*/
@@ -11,22 +12,22 @@ $(document).ready(function () {
         }
     });
 
-    $.get('/front/categories', {}, function(data) {
+    $.get(basePath + 'categories', {}, function(data) {
         var navList = [{
-            path:'[[@{}]]',
+            path: basePath,
             name:'首页',
             active: true
         }];
         var children = [];
-        var blogNav = {path:"/", name:"博文", children: children};
+        var blogNav = {path:"javascript:void(0)", name:"博文", children: children};
         if (data.success && data.data) {
             for (var i=0; i<data.data.length; i++) {
-                children.push({path: "?category=" + data.data[i].code, name:data.data[i].name});
+                children.push({path: basePath + "?categoryCode=" + data.data[i].code + "&categoryName=" + encodeURIComponent(data.data[i].name), name:data.data[i].name});
             }
         }
         navList.push(blogNav);
-        navList.push({path:'/front/message', name:'留言区'});
-        navList.push({path:'/front/history', name:'归档'});
+        navList.push({path: basePath + 'message', name:'留言区'});
+        navList.push({path: basePath + 'history', name:'归档'});
 
         $('#nav-div').append(createNav(navList));
         $('.ddmenu li.dropdown').hover(function () {
@@ -58,8 +59,15 @@ function createNav(navList, level) {
             nav.push(' active');
         }
         nav.push('"><a href="');
-        nav.push(navList[i].path);
+        if (navList[i].path) {
+            nav.push(navList[i].path);
+        } else {
+            nav.push('javascript:void(0)');
+        }
         nav.push('"');
+        if (navList[i].onclick) {
+            nav.push(' onclick="' + navList[i].onclick + '"');
+        }
         if (hasChildren) {
             nav.push(' class="dropdown-toggle"');
         }
@@ -79,17 +87,6 @@ function createNav(navList, level) {
     return nav.join('');
 }
 
-Array.prototype.indexOf = function(val) {
-    for (var i = 0; i < this.length; i++) {
-        if (this[i] == val) return i;
-    }
-    return -1;
-};
 
-Array.prototype.remove = function(val) {
-    var index = this.indexOf(val);
-    if (index > -1) {
-        this.splice(index, 1);
-    }
-};
+
 

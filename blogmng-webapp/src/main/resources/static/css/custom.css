@@ -460,6 +460,7 @@ a.btn {
 }
 .pagination .current a{
     color:#000;
+    background-color: #ddd;;
 }
 .pagination .current a:hover{
     background-color: #ddd;
@@ -471,4 +472,23 @@ a.btn {
 .article-tag:hover{
     background-color: #ddd;
     color: #000;
+}
+.history-date .popover::-webkit-scrollbar-track-piece{
+    background-color:#fff;/*滚动条的背景颜色*/
+    -webkit-border-radius:0;/*滚动条的圆角宽度*/
+}
+.history-date .popover::-webkit-scrollbar{
+    width:0px;/*滚动条的宽度*/
+}
+.history-date .popover {
+    display: none;z-index: 9999;position:relative;width:120px;left:150px;top:-120px;
+    height:120px;width:100px;overflow-y:auto;overflow-x:hidden;line-height:40px;font-size:20px;
+}
+.history-date .popover>div:hover {
+    background-color: red;
+    color:#fff;
+}
+.history-date .popover>div{
+    padding: 0 10px;
+    cursor: pointer;
 }
