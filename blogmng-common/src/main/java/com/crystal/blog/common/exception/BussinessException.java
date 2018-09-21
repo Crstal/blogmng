@@ -7,7 +7,7 @@ import com.crystal.blog.common.enums.ErrorCode;
 * @Description: 通用错误异常
 * @Date: 11:32 2018/8/16
 **/
-public class BussinessException {
+public class BussinessException extends Exception {
 
     private String code;
     private String message;

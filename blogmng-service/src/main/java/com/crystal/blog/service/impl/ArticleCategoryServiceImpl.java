@@ -3,7 +3,6 @@ package com.crystal.blog.service.impl;
 import com.crystal.blog.common.bean.response.ArticleCategoryVO;
 import com.crystal.blog.common.bean.response.TagVO;
 import com.crystal.blog.common.bean.response.UserVO;
-import com.crystal.blog.common.util.AuthUtil;
 import com.crystal.blog.common.util.BeanUtil;
 import com.crystal.blog.dao.mapper.ArticleCategoryMapper;
 import com.crystal.blog.dao.mapper.TagMapper;
@@ -12,6 +11,8 @@ import com.crystal.blog.dao.model.ArticleCategoryExample;
 import com.crystal.blog.dao.model.Tag;
 import com.crystal.blog.dao.model.TagExample;
 import com.crystal.blog.service.ArticleCategoryService;
+import com.crystal.blog.sso.bean.Principal;
+import com.crystal.blog.sso.util.AuthorizeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -41,9 +42,9 @@ public class ArticleCategoryServiceImpl implements ArticleCategoryService {
     }
 
     public List<TagVO> selectTagList() {
-        UserVO userVO = AuthUtil.getCurrentUser();
+        Principal principal = AuthorizeUtil.getCurrentUser();
         TagExample example = new TagExample();
-        example.createCriteria().andUserIdEqualTo(userVO.getId());
+        example.createCriteria().andUserIdEqualTo(principal.getId());
         List<Tag> categories = tagMapper.selectByExample(example);
         List<TagVO> result = BeanUtil.transferList(categories, TagVO.class);
         return result;

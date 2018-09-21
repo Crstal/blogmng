@@ -1,15 +1,15 @@
 package com.crystal.blog.controller.common;
 
 import com.crystal.blog.common.bean.response.base.Result;
-import com.crystal.blog.common.config.CommonProperties;
 import com.crystal.blog.common.enums.ErrorCode;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.crystal.blog.config.CommonProperties;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -18,7 +18,7 @@ import java.nio.file.Paths;
 @Controller
 public class FileController {
 
-    @Autowired
+    @Resource
     private CommonProperties commonProperties;
 
     /**

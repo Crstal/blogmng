@@ -1,7 +1,6 @@
-package com.crystal.blog.common.config;
+package com.crystal.blog.config;
 
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 /**

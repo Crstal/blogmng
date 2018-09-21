@@ -1,17 +1,10 @@
-package com.crystal.blog.dao.aop;
+package com.crystal.blog.aop;
 
-import com.crystal.blog.common.bean.param.base.PageParam;
-import com.crystal.blog.common.bean.response.UserVO;
-import com.crystal.blog.common.bean.response.base.PageInfo;
-import com.crystal.blog.common.util.AuthUtil;
-import com.crystal.blog.common.util.BeanUtil;
 import com.crystal.blog.dao.model.base.BaseModel;
-import com.github.pagehelper.Page;
-import com.github.pagehelper.PageHelper;
+import com.crystal.blog.sso.bean.Principal;
+import com.crystal.blog.sso.util.AuthorizeUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.core.annotation.Order;
@@ -31,10 +24,10 @@ public class MapperAspect {
         if (args != null && args.length > 0) {
             if (args[0] instanceof BaseModel) {
                 BaseModel baseModel = (BaseModel) args[0];
-                UserVO userVO = AuthUtil.getCurrentUser();
-                baseModel.setCreateBy(userVO.getLoginName());
+                Principal principal = AuthorizeUtil.getCurrentUser();
+                baseModel.setCreateBy(principal.getLoginName());
                 baseModel.setCreateTime(new Date());
-                baseModel.setUpdateBy(userVO.getLoginName());
+                baseModel.setUpdateBy(principal.getLoginName());
                 baseModel.setUpdateTime(new Date());
                 log.info("调用方法{}插入对象{}", joinPoint.getSignature().getName(), baseModel);
             }
@@ -47,8 +40,8 @@ public class MapperAspect {
         if (args != null && args.length == 1) {
             if (args[0] instanceof BaseModel) {
                 BaseModel baseModel = (BaseModel) args[0];
-                UserVO userVO = AuthUtil.getCurrentUser();
-                baseModel.setUpdateBy(userVO.getLoginName());
+                Principal principal = AuthorizeUtil.getCurrentUser();
+                baseModel.setUpdateBy(principal.getLoginName());
                 baseModel.setUpdateTime(new Date());
                 log.info("调用方法{}修改对象{}", joinPoint.getSignature().getName(), baseModel);
             }

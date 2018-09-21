@@ -79,11 +79,11 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
         </table>-->
-        <table schema="blog" tableName="article_content" domainObjectName="ArticleContent">
+     <!--   <table schema="blog" tableName="article_content" domainObjectName="ArticleContent">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
-        </table>
+        </table>-->
        <!-- <table schema="blog" tableName="role" domainObjectName="Role">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
@@ -92,12 +92,6 @@
         <table schema="blog" tableName="role_user" domainObjectName="RoleUser">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-        </table>
-        <table schema="blog" tableName="user" domainObjectName="User">
-            <property name="useActualColumnNames" value="false"/>
-            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="sex" jdbcType="TINYINT" javaType="java.lang.Integer"/>
-            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
         </table>
         <table schema="blog" tableName="article_category" domainObjectName="ArticleCategory">
             <property name="useActualColumnNames" value="false"/>
@@ -123,5 +117,16 @@
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
         </table>-->
+       <!-- <table schema="blog" tableName="access_token_record" domainObjectName="AccessTokenRecord">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="type" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>-->
+        <table schema="blog" tableName="user" domainObjectName="User">
+            <property name="useActualColumnNames" value="false"/>
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <columnOverride column="sex" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+        </table>
     </context>
 </generatorConfiguration>

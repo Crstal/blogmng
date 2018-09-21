@@ -51,6 +51,9 @@ public class UserVO {
      */
     private Date birth;
 
+    // 微信openId
+    private String openId;
+
     /**
      * 含义：状态：1正常 2删除 3冻结
      */

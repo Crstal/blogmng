@@ -164,8 +164,8 @@ CREATE TABLE `role_user` (
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `login_Name` varchar(20) DEFAULT NULL COMMENT '登陆名',
-  `nick_Name` varchar(20) DEFAULT NULL COMMENT '昵称',
+  `login_name` varchar(20) DEFAULT NULL COMMENT '登陆名',
+  `nick_name` varchar(20) DEFAULT NULL COMMENT '昵称',
   `password` varchar(20) DEFAULT NULL COMMENT '密码',
   `salt` varchar(20) DEFAULT NULL COMMENT '加密密钥',
   `icon_atta_id` int(11) DEFAULT NULL COMMENT '头像',
@@ -173,6 +173,7 @@ CREATE TABLE `user` (
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
   `mobile` varchar(20) DEFAULT NULL COMMENT '手机号',
   `birth` datetime DEFAULT NULL COMMENT '生日',
+  `open_id` varchar(50) DEFAULT NULL COMMENT '微信openId',
   `status` tinyint(4) DEFAULT '1' COMMENT '状态：1正常 2删除 3冻结',
   `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
@@ -265,3 +266,15 @@ CREATE TABLE `user_follow_article` (
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='用户关注文章表';
+
+CREATE TABLE `access_token` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+	`type` TINYINT(4) NOT NULL COMMENT '类型：1微信 2qq',
+  `token` varchar(50) NOT NULL COMMENT '配置token',
+  `access_token` varchar(512) NOT NULL COMMENT '访问token',
+  `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `update_by` varchar(20) DEFAULT NULL COMMENT '修改人',
+  `update_time` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='访问token';

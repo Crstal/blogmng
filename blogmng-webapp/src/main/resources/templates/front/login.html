@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>Easy Start - Grid</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
+    <link th:href="@{/scripts/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/scripts/bootstrap/css/bootstrap-responsive.min.css}" rel="stylesheet">
+    <link th:href="@{/scripts/bootstrap/css/bootstrapValidator.css}" rel="stylesheet">
+    <link th:href="@{/css/custom.css}" rel="stylesheet" type="text/css" />
+    <script th:src="@{/scripts/jquery.min.js}"></script>
+    <script th:src="@{/scripts/bootstrap/js/bootstrapValidator.js}"></script>
+</head>
+<body id="pageBody">
+<div id="divBoxed" class="container" style="width:400px;">
+    <div class="transparent-bg" style="position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;zoom: 1;"></div>
+    <div class="contentArea">
+        <div class="divPanel notop page-content">
+            <div class="row-fluid">
+                <div class="span12">
+                <h4 class="title">
+                  <div class="normal-title">
+                    <a class="font-login" th:href="@{/login}" style="">登录</a>
+                    <b style="margin:0 10px;">·</b>
+                    <a id="js-sign-up-btn" class="font-login" style="color:#999;" th:href="@{/register}">注册</a>
+                  </div>
+                </h4>
+                <div class="js-sign-in-container">
+                  <form id="new_session" th:action="@{/login}" accept-charset="UTF-8" method="post"  class="form-horizontal">
+                      <div class="login-error"></div>
+                      <input type="hidden" name="authenticity_token">
+                    <!-- 登录登录名输入框 -->
+                      <div class="form-group input-prepend restyle js-normal">
+                        <input class="form-control" placeholder="手机号或邮箱" type="text" name="email_or_mobile_number" id="session_email_or_mobile_number">
+                        <i class="iconfont ic-user"></i>
+                      </div>
+
+                    <div class="form-group input-prepend">
+                      <input class="form-control" placeholder="密码" type="password" name="password" id="session_password" >
+                      <i class="iconfont ic-password"></i>
+                    </div>
+                    <div class="remember-btn" style="float:left;margin-left:24px">
+                      <input type="checkbox" value="true" checked="checked" name="session[remember_me]" id="session_remember_me"><span>记住我</span>
+                    </div>
+                    <a class="btn btn-info" href="#" id="sign-in-form-submit-btn">登录</a>
+                </form>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('#new_session')
+            .bootstrapValidator({
+                message: 'This value is not valid',
+                feedbackIcons: {
+                    valid: 'glyphicon glyphicon-ok',
+                    invalid: 'glyphicon glyphicon-remove',
+                    validating: 'glyphicon glyphicon-refresh'
+                },
+                fields: {
+                    email_or_mobile_number: {
+                        message: 'The username is not valid',
+                        validators: {
+                            notEmpty: {
+                                message: '手机号或邮箱不能为空'
+                            },
+                            stringLength: {
+                                min: 6,
+                                max: 30,
+                                message: '手机号或邮箱长度6-30位'
+                            },
+                            regexp: {
+                                regexp: /^(((00|\+)?(86(?:-| )))?((\d{11})|(\d{3}[- ]{1}\d{4}[- ]{1}\d{4})|((\d{2,4}[- ]){1}(\d{7,8}|(\d{3,4}[- ]{1}\d{4}))([- ]{1}\d{1,4})?)))|((([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*)$/,
+                                message: '手机号或邮箱格式有误'
+                            }
+                        }
+                    },
+                    password: {
+                        validators: {
+                            notEmpty: {
+                                message: '密码不能为空'
+                            }
+                        }
+                    }
+                }
+            })
+            .on('success.form.bv', function(e) {
+                // Prevent form submission
+                e.preventDefault();
+
+                // Get the form instance
+                var $form = $(e.target);
+
+                // Get the BootstrapValidator instance
+                var bv = $form.data('bootstrapValidator');
+
+                // Use Ajax to submit form data
+                $.post($form.attr('action'), $form.serialize(), function(result) {
+                    console.log(result);
+                }, 'json');
+            });
+    });
+</script>
+</body>
+</html>

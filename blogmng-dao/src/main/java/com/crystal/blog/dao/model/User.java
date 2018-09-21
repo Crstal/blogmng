@@ -9,7 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
-* Created by Mybatis Generator on 2018/08/29
+* Created by Mybatis Generator on 2018/09/12
 */
 @Data
 @Builder
@@ -69,6 +69,12 @@ public class User extends BaseModel implements Serializable {
      * 含义：生日
      */
     private Date birth;
+
+    /**
+     * 字段：open_id
+     * 含义：微信openId
+     */
+    private String openId;
 
     /**
      * 字段：status

@@ -34,8 +34,11 @@ public class HomeController {
         return modelAndView;
     }
 
-
-
+    /**
+     * 归档
+     * @param year
+     * @return
+     */
     @GetMapping(value = {"history/{year}", "history"})
     public ModelAndView history(@PathVariable(required = false) Integer year) {
         if (year == null) {

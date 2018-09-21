@@ -4,11 +4,9 @@ import com.crystal.blog.common.bean.param.ArticleParam;
 import com.crystal.blog.common.bean.param.ArticleQueryParam;
 import com.crystal.blog.common.bean.response.ArticleVO;
 import com.crystal.blog.common.bean.response.TagVO;
-import com.crystal.blog.common.bean.response.UserVO;
 import com.crystal.blog.common.bean.response.base.PageInfo;
 import com.crystal.blog.common.enums.ArticleStatusEnum;
 import com.crystal.blog.common.enums.StatusEnum;
-import com.crystal.blog.common.util.AuthUtil;
 import com.crystal.blog.common.util.BeanUtil;
 import com.crystal.blog.dao.mapper.ArticleContentMapper;
 import com.crystal.blog.dao.mapper.ArticleMapper;
@@ -16,29 +14,31 @@ import com.crystal.blog.dao.mapper.ArticleTagMapper;
 import com.crystal.blog.dao.mapper.TagMapper;
 import com.crystal.blog.dao.model.*;
 import com.crystal.blog.service.ArticleService;
+import com.crystal.blog.sso.bean.Principal;
+import com.crystal.blog.sso.util.AuthorizeUtil;
 import com.github.pagehelper.Page;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.thymeleaf.util.DateUtils;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 
-    @Autowired
+    @Resource
     private ArticleMapper articleMapper;
 
-    @Autowired
+    @Resource
     private ArticleContentMapper articleContentMapper;
 
-    @Autowired
+    @Resource
     private TagMapper tagMapper;
 
-    @Autowired
+    @Resource
     private ArticleTagMapper articleTagMapper;
 
     @Override
@@ -57,7 +57,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     private Boolean addArticle(ArticleParam articleParam) {
-        UserVO currentUser = AuthUtil.getCurrentUser();
+        Principal principal = AuthorizeUtil.getCurrentUser();
         // 保存文章内容
         ArticleContent content = new ArticleContent();
         content.setContent(articleParam.getContent());
@@ -67,12 +67,12 @@ public class ArticleServiceImpl implements ArticleService {
         // 保存文章
         Article article = BeanUtil.transfer(articleParam, Article.class);
         article.setContentId(content.getId());
-        article.setUserId(currentUser.getId());
+        article.setUserId(principal.getId());
         articleMapper.insertSelective(article);
 
         // 保存标签
         articleParam.setId(article.getId());
-        saveArticleTag(articleParam, currentUser);
+        saveArticleTag(articleParam, principal.getId());
         return true;
     }
 
@@ -82,7 +82,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @return
      */
     private Boolean updateArticle(ArticleParam articleParam) {
-        UserVO currentUser = AuthUtil.getCurrentUser();
+        Principal principal = AuthorizeUtil.getCurrentUser();
         // 保存文章内容
         ArticleContent content = new ArticleContent();
         content.setId(articleParam.getContentId());
@@ -99,27 +99,27 @@ public class ArticleServiceImpl implements ArticleService {
         articleTagMapper.deleteByExample(articleTagExample);
 
         // 保存标签
-        saveArticleTag(articleParam, currentUser);
+        saveArticleTag(articleParam, principal.getId());
         return true;
     }
 
     /**
      * 保存标签和文章标签关系
      * @param articleParam
-     * @param currentUser
+     * @param userId
      */
-    private void saveArticleTag(ArticleParam articleParam, UserVO currentUser) {
+    private void saveArticleTag(ArticleParam articleParam, Integer userId) {
         if (!StringUtils.isEmpty(articleParam.getTags())) {
             String[] tags = articleParam.getTags().split(",");
 
             for (String tag : tags) {
                 TagExample example = new TagExample();
-                example.createCriteria().andUserIdEqualTo(currentUser.getId()).andTagEqualTo(tag);
+                example.createCriteria().andUserIdEqualTo(userId).andTagEqualTo(tag);
                 long count = tagMapper.countByExample(example);
                 if (count == 0) { // 添加标签
                     Tag tagModel = new Tag();
                     tagModel.setTag(tag);
-                    tagModel.setUserId(currentUser.getId());
+                    tagModel.setUserId(userId);
                     tagMapper.insert(tagModel);
                 }
                 ArticleTag articleTag = new ArticleTag();
@@ -159,9 +159,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public PageInfo<ArticleVO> queryArticleListWithPage(ArticleQueryParam articleQueryParam) {
-        UserVO userVO = AuthUtil.getCurrentUser();
-        if (userVO != null) {
-            articleQueryParam.setUserId(userVO.getId());
+        Principal principal = AuthorizeUtil.getCurrentUser();
+        if (principal != null) {
+            articleQueryParam.setUserId(principal.getId());
         }
         Page<Article> page = articleMapper.queryArticleListWithPage(articleQueryParam);
         PageInfo<ArticleVO> result = BeanUtil.transferPage(page, ArticleVO.class);
@@ -179,12 +179,12 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleVO> queryArticleList(Integer year) {
-        UserVO userVO = AuthUtil.getCurrentUser();
+        Principal principal = AuthorizeUtil.getCurrentUser();
         ArticleExample example = new ArticleExample();
         ArticleExample.Criteria criteria = example.createCriteria();
         criteria.andStatusEqualTo(ArticleStatusEnum.PUBLISH.getCode());
-        if (userVO != null) {
-            criteria.andUserIdEqualTo(userVO.getId());
+        if (principal != null) {
+            criteria.andUserIdEqualTo(principal.getId());
         }
 
         criteria.andCreateTimeBetween(DateUtils.create(year, 1, 1).getTime(), DateUtils.create(year + 1, 1, 1).getTime());
@@ -196,10 +196,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleVO> queryHotArticleList() {
-        UserVO userVO = AuthUtil.getCurrentUser();
+        Principal principal = AuthorizeUtil.getCurrentUser();
         Integer userId = null;
-        if (userVO != null) {
-            userId = userVO.getId();
+        if (principal != null) {
+            userId = principal.getId();
         }
         List<Article> articleList = articleMapper.queryHotArticleList(userId);
         List<ArticleVO> articleVOS = BeanUtil.transferList(articleList, ArticleVO.class);
@@ -210,9 +210,9 @@ public class ArticleServiceImpl implements ArticleService {
     public List<ArticleVO> queryNewArticleList() {
         ArticleQueryParam articleQueryParam = new ArticleQueryParam();
         articleQueryParam.setStatus(ArticleStatusEnum.PUBLISH.getCode());
-        UserVO userVO = AuthUtil.getCurrentUser();
-        if (userVO != null) {
-            articleQueryParam.setUserId(userVO.getId());
+        Principal principal = AuthorizeUtil.getCurrentUser();
+        if (principal != null) {
+            articleQueryParam.setUserId(principal.getId());
         }
         articleQueryParam.setPageSize(5);
         Page<Article> page = articleMapper.queryArticleListWithPage(articleQueryParam);

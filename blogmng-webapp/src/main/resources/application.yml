@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 80
   servlet:
     application-display-name: 博客后端管理
 
@@ -50,3 +50,17 @@ pagehelper:
   reasonable: true
   supportMethodsArguments: true
   params: count=countSql
+
+# 登陆的一些配置
+login:
+  wechat:
+    # appid: wx639c64d4a47ce07b
+    # appsecret: 6207967674ab338a68d738e9232c023e
+    appid: wx16c38049de96f3a3
+    appsecret: 6922006a4c58ef075aeb1a6742cc66bc
+    redirectUrl: gh_76ede78aa807
+    token: crystalwechat
+  qq:
+    appid: wx639c64d4a47ce07b
+    appsecret: 6207967674ab338a68d738e9232c023e
+    redirectUrl: gh_76ede78aa807
