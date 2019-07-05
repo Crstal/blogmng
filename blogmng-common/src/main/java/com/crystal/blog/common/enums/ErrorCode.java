@@ -1,5 +1,6 @@
 package com.crystal.blog.common.enums;
 
+import com.sun.org.apache.xerces.internal.impl.dv.dtd.NOTATIONDatatypeValidator;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -31,7 +32,9 @@ public enum ErrorCode implements Serializable {
 
     PARAMETER_TRANSFORM_ERROR("1301","参数转换异常"),
 
-    PARAMETER_INVALID("1302", "参数无效");
+    PARAMETER_INVALID("1302", "参数无效"),
+
+    NOT_LOGIN("1401", "请先登陆");
 
     private String code;
     private String message;

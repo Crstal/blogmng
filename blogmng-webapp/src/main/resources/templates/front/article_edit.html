@@ -11,7 +11,7 @@
         <link rel="stylesheet" th:href="@{/scripts/editor.md-master/css/editormd.min.css}" />
         <link th:href="@{/css/custom.css}" rel="stylesheet" type="text/css" />
     </head>
-    <body>
+    <body style="overflow-y: hidden;">
         <div id="layout" class="container home-fluid">
             <div style="height: 20px;"></div>
             <header>
@@ -42,7 +42,9 @@
                         <div class="categorie-list">
                             <div class="form-check" th:each="tag: ${tagList}">
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="category" th:id="${tag.id}" th:value="${tag.tag}"><span th:text="${tag.tag}"></span>
+                                    <input type="checkbox" name="category" th:id="${tag.id}" th:value="${tag.tag}" checked="checked" th:if="${tag.checked}">
+                                    <input type="checkbox" name="category" th:id="${tag.id}" th:value="${tag.tag}" th:if="${not tag.checked}">
+                                    <span th:text="${tag.tag}"></span>
                                 </label>
                             </div>
                         </div>
@@ -71,6 +73,7 @@
         <script th:src="@{/scripts/editor.md-master/editormd.min.js}"></script>
         <script th:src="@{/scripts/browser.js}"></script>
         <script th:src="@{/scripts/popup_layer.js}"></script>
+        <script th:src="@{/scripts/jquery.cookie.js}"></script>
         <script type="text/javascript">
             var basePath = $('meta[name=context-path]').attr("content");
             var hidCategories = [];
@@ -102,7 +105,7 @@
                     path    : "/scripts/editor.md-master/lib/", //你的lib目录的路径
                     imageUpload : true,
                     imageFormats : ["jpg","jpeg","gif","png","bmp","webp"],
-                    imageUploadURL : "/uploadimg",
+                    imageUploadURL : "/file/uploadimg",
                     //这个配置在simple.html中并没有，但是为了能够提交表单，使用这个配置可以让构造出来的HTML代码直接在第二个隐藏的textarea域中，方便post提交表单。
                     saveHTMLToTextarea : true,
                     //下面这一行将使用dark主题
@@ -207,9 +210,9 @@
                     'categoryCode': $('#categoryCode option:selected').val(),
                     'categoryName': $('#categoryCode option:selected').text(),
                     'tags':hidCategories.join(','),
-                    'status': articleStatus
+                    'status': articleStatus,
+                    'authId':$.cookie("authId")
                 }
-                data = $.extend(data, {'content': htmlco});
                 $.post('[[@{/back/article}]]', data, function(data){
                     if (data.success) {
                         if (articleStatus == 3) {

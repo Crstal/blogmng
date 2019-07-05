@@ -9,6 +9,7 @@
     <title>首页</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="context-path" th:content="@{/}"/>
 </head>
 <body>
 <div layout:fragment="content" >
@@ -39,7 +40,7 @@
         $(function () {
             addArticleList(1);
             showMyTags();
-
+            $('#loginA').attr("href", basePath + "back/article?authId=" + $.cookie("authId"));
         });
 
         /**
@@ -216,7 +217,7 @@
 
             <h3>关于本站</h3>
             <p>
-                <a href="index.html" id="loginA">登陆后台</a>
+                <a id="loginA">添加博文</a>
             <address>访问量：0&nbsp;&nbsp;&nbsp;已运行：0天<br />
             <ul id="zzxx-box">
                 <li class="weixin"><a title="微信"><i class="fa fa-weixin"></i><span style=""></span></a></li>

@@ -502,8 +502,24 @@ a.btn {
     height:30px;width:260px;
 }
 #sign-in-form-submit-btn {
-    width:250px;height:30px;line-height:30px;font-size:20px;margin-top:10px;
+    width:270px;height:40px;line-height:30px;font-size:20px;margin-top:10px;
 }
 .login-error {
     color:red;height:25px;line-height:25px;
+}
+.has-error {
+    font-size: 14px;
+}
+.has-error .help-block{
+    color:red;
+    text-align: left;
+}
+#new_session .form-group{
+    margin-left: 0;
+}
+.editormd-form input[type=text] {
+    height: 30px;
+}
+.editormd-dialog-footer {
+    margin: -20px 0;
 }

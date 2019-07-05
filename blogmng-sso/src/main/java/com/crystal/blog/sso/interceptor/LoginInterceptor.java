@@ -34,7 +34,7 @@ public class LoginInterceptor implements HandlerInterceptor {
         Principal principal = (Principal) user;
         PrincipalHolder.set(principal);
         log.info("1111111111111");
-        return false;
+        return true;
     }
 
     // 在目标方法执行后执行，但在请求返回前，我们仍然可以对 ModelAndView进行修改

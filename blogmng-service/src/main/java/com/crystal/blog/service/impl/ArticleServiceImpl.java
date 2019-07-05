@@ -8,6 +8,7 @@ import com.crystal.blog.common.bean.response.base.PageInfo;
 import com.crystal.blog.common.enums.ArticleStatusEnum;
 import com.crystal.blog.common.enums.StatusEnum;
 import com.crystal.blog.common.util.BeanUtil;
+import com.crystal.blog.common.util.StringUtil;
 import com.crystal.blog.dao.mapper.ArticleContentMapper;
 import com.crystal.blog.dao.mapper.ArticleMapper;
 import com.crystal.blog.dao.mapper.ArticleTagMapper;
@@ -15,6 +16,7 @@ import com.crystal.blog.dao.mapper.TagMapper;
 import com.crystal.blog.dao.model.*;
 import com.crystal.blog.service.ArticleService;
 import com.crystal.blog.sso.bean.Principal;
+import com.crystal.blog.sso.core.PrincipalHolder;
 import com.crystal.blog.sso.util.AuthorizeUtil;
 import com.github.pagehelper.Page;
 import org.springframework.stereotype.Service;
@@ -62,12 +64,14 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleContent content = new ArticleContent();
         content.setContent(articleParam.getContent());
         content.setStatus(StatusEnum.NORMAL.getCode());
+        content.setDefaultValue(PrincipalHolder.get().getLoginName());
         articleContentMapper.insert(content);
 
         // 保存文章
         Article article = BeanUtil.transfer(articleParam, Article.class);
         article.setContentId(content.getId());
         article.setUserId(principal.getId());
+        article.setDefaultValue(PrincipalHolder.get().getLoginName());
         articleMapper.insertSelective(article);
 
         // 保存标签
@@ -87,10 +91,12 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleContent content = new ArticleContent();
         content.setId(articleParam.getContentId());
         content.setContent(articleParam.getContent());
+        content.setDefaultValue(PrincipalHolder.get().getLoginName());
         articleContentMapper.updateByPrimaryKeySelective(content);
 
         // 保存文章
         Article article = BeanUtil.transfer(articleParam, Article.class);
+        article.setDefaultValue(PrincipalHolder.get().getLoginName());
         articleMapper.updateByPrimaryKeySelective(article);
 
         // 删除文章标签关联
@@ -99,6 +105,7 @@ public class ArticleServiceImpl implements ArticleService {
         articleTagMapper.deleteByExample(articleTagExample);
 
         // 保存标签
+        article.setDefaultValue(PrincipalHolder.get().getLoginName());
         saveArticleTag(articleParam, principal.getId());
         return true;
     }
@@ -120,11 +127,13 @@ public class ArticleServiceImpl implements ArticleService {
                     Tag tagModel = new Tag();
                     tagModel.setTag(tag);
                     tagModel.setUserId(userId);
+                    tagModel.setDefaultValue(PrincipalHolder.get().getLoginName());
                     tagMapper.insert(tagModel);
                 }
                 ArticleTag articleTag = new ArticleTag();
                 articleTag.setTag(tag);
                 articleTag.setArticleId(articleParam.getId());
+                articleTag.setDefaultValue(PrincipalHolder.get().getLoginName());
                 articleTagMapper.insert(articleTag);
             }
         }
@@ -144,12 +153,14 @@ public class ArticleServiceImpl implements ArticleService {
             List<ArticleTag> tags = articleTagMapper.selectByExample(articleTagExample);
             List<TagVO> tagVos = BeanUtil.transferList(tags, TagVO.class);
             result.setTags(tagVos);
-            if (CollectionUtils.isEmpty(tags)) {
+            if (!CollectionUtils.isEmpty(tags)) {
                 StringBuffer tagsStr = new StringBuffer();
                 for (ArticleTag tag: tags) {
-                    tagsStr.append(tag + ",");
+                    tagsStr.append(tag.getTag() + ",");
                 }
-                result.setTagsStr(tagsStr.substring(0, tagsStr.length()-2));
+                if (!StringUtils.isEmpty(tagsStr.toString())) {
+                    result.setTagsStr(tagsStr.substring(0, tagsStr.length() - 1).toString());
+                }
             }
         } else {
             result = new ArticleVO();
@@ -159,10 +170,6 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public PageInfo<ArticleVO> queryArticleListWithPage(ArticleQueryParam articleQueryParam) {
-        Principal principal = AuthorizeUtil.getCurrentUser();
-        if (principal != null) {
-            articleQueryParam.setUserId(principal.getId());
-        }
         Page<Article> page = articleMapper.queryArticleListWithPage(articleQueryParam);
         PageInfo<ArticleVO> result = BeanUtil.transferPage(page, ArticleVO.class);
         if (!CollectionUtils.isEmpty(result.getResult())) {

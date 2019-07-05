@@ -9,18 +9,20 @@
     <title>蛾子的博客</title>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="context-path" th:content="@{/}"/>
 </head>
 <body>
 <div layout:fragment="content" >
     <div class="breadcrumbs">
-        <a th:href="@{/}">首页</a> &nbsp;/&nbsp; <span>博文</span>
+        <a th:href="@{/}">首页</a> &nbsp;/&nbsp; <span>博文</span> &nbsp;/&nbsp; <span th:text="${article.categoryName}"></span>
     </div>
 
     <div class="row-fluid">
         <div class="span12">
             <div class="page-header" style="text-align: center;">
-                <h1 th:text="${article.title}"> <small>  子标题</small></h1>
-                <p><span th:text="${'时间：'+ #dates.format(article.createTime, 'yyyy-MM-dd') + ' 访问量：' + article.visitCount}"></span></p>
+                <h1 th:text="${article.title}"></h1>
+                <h1> <small th:text="${article.tagsStr}"> </small></h1>
+                <p id="articleInfo"><span th:text="${'时间：'+ #dates.format(article.createTime, 'yyyy-MM-dd') + ' 访问量：' + article.visitCount}"></span></p>
             </div>
             <div id="articleContent">
                 <textarea id="articleContentText" style="display:none;" name="test-editormd-markdown-doc" th:utext="${article.content}"></textarea>
@@ -102,6 +104,14 @@
                 tocContainer : "",
                 tocDropdown   : false
             });
+
+            if ($.cookie("authId")) {
+                var aHtml = [];
+                aHtml.push('<a href="'+ basePath + 'back/article/');
+                aHtml.push('[[${article.id}]]');
+                aHtml.push('" style="margin-left:50px;color:#333;">编辑</a>');
+                $('#articleInfo').append(aHtml.join(''));
+            }
         });
     </script>
 </div>

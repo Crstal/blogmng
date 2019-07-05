@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="context-path" th:content="@{/}"/>
 
     <link rel="shortcut icon" th:href="@{/images/favicon.ico}" type="image/x-icon" />
     <link th:href="@{/scripts/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
@@ -14,6 +15,8 @@
     <link th:href="@{/css/custom.css}" rel="stylesheet" type="text/css" />
     <script th:src="@{/scripts/jquery.min.js}"></script>
     <script th:src="@{/scripts/bootstrap/js/bootstrapValidator.js}"></script>
+    <script th:src="@{/scripts/default.js}"></script>
+    <script th:src="@{/scripts/jquery.cookie.js}"></script>
 </head>
 <body id="pageBody">
 <div id="divBoxed" class="container" style="width:400px;">
@@ -34,8 +37,8 @@
                       <div class="login-error"></div>
                       <input type="hidden" name="authenticity_token">
                     <!-- 登录登录名输入框 -->
-                      <div class="form-group input-prepend restyle js-normal">
-                        <input class="form-control" placeholder="手机号或邮箱" type="text" name="email_or_mobile_number" id="session_email_or_mobile_number">
+                      <div class="form-group input-prepend restyle">
+                        <input class="form-control" placeholder="手机号或邮箱" type="text" name="mobileOrEmail" id="session_email_or_mobile_number">
                         <i class="iconfont ic-user"></i>
                       </div>
 
@@ -46,7 +49,7 @@
                     <div class="remember-btn" style="float:left;margin-left:24px">
                       <input type="checkbox" value="true" checked="checked" name="session[remember_me]" id="session_remember_me"><span>记住我</span>
                     </div>
-                    <a class="btn btn-info" href="#" id="sign-in-form-submit-btn">登录</a>
+                    <button class="btn btn-info" href="#" id="sign-in-form-submit-btn">登录</button>
                 </form>
                 </div>
                 </div>
@@ -103,9 +106,13 @@
 
                 // Use Ajax to submit form data
                 $.post($form.attr('action'), $form.serialize(), function(result) {
-                    console.log(result);
+                    if (result.success) {
+                        $.cookie('authId', result.data);
+                        window.location.href = basePath;
+                    }
                 }, 'json');
             });
+
     });
 </script>
 </body>

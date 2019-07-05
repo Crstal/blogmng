@@ -3,8 +3,11 @@ package com.crystal.blog.common.util;
 import com.crystal.blog.common.constant.Constant;
 import org.thymeleaf.util.DateUtils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class DateUtil {
@@ -20,5 +23,10 @@ public class DateUtil {
             years.add(start);
         }
         return years;
+    }
+
+    public static String getYearMonth() {
+        DateFormat format = new SimpleDateFormat("yyyy-MM");
+        return format.format(new Date());
     }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Configuration status="trace" strict="true" name="LogConfig">
     <Properties>
-        <Property name="filepath">D:/blog/log4j2</Property>
+        <Property name="filepath">/tmp/blog/log4j2</Property>
     </Properties>
     <Appenders>
         <Console name="STDOUT" target="SYSTEM_OUT">

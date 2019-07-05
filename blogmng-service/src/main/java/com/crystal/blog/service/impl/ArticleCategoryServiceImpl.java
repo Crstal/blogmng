@@ -42,9 +42,11 @@ public class ArticleCategoryServiceImpl implements ArticleCategoryService {
     }
 
     public List<TagVO> selectTagList() {
-        Principal principal = AuthorizeUtil.getCurrentUser();
         TagExample example = new TagExample();
-        example.createCriteria().andUserIdEqualTo(principal.getId());
+        Principal principal = AuthorizeUtil.getCurrentUser();
+        if (principal != null) {
+            example.createCriteria().andUserIdEqualTo(principal.getId());
+        }
         List<Tag> categories = tagMapper.selectByExample(example);
         List<TagVO> result = BeanUtil.transferList(categories, TagVO.class);
         return result;

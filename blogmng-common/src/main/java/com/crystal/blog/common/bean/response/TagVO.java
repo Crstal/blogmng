@@ -18,4 +18,6 @@ public class TagVO {
      * 含义：标签类型
      */
     private String tag;
+
+    private boolean checked = false;
 }
