@@ -26,4 +26,13 @@ public class BaseModel {
         updateBy = operator;
         updateTime = new Date();
     }
+
+    public void setModifiedValue(String operator) {
+        if (StringUtils.isEmpty(operator)) {
+            operator = "system";
+        }
+
+        updateBy = operator;
+        updateTime = new Date();
+    }
 }

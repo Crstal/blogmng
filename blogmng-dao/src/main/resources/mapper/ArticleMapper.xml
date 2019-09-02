@@ -446,7 +446,7 @@
         and b.tag = #{tag,jdbcType=VARCHAR}
       </if>
     </trim>
-    order by a.update_time desc, a.create_time desc
+    order by a.create_time desc, a.update_time desc
   </select>
 
   <!--  查询热门文章        -->

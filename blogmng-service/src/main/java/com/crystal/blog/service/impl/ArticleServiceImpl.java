@@ -91,12 +91,12 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleContent content = new ArticleContent();
         content.setId(articleParam.getContentId());
         content.setContent(articleParam.getContent());
-        content.setDefaultValue(PrincipalHolder.get().getLoginName());
+        content.setModifiedValue(PrincipalHolder.get().getLoginName());
         articleContentMapper.updateByPrimaryKeySelective(content);
 
         // 保存文章
         Article article = BeanUtil.transfer(articleParam, Article.class);
-        article.setDefaultValue(PrincipalHolder.get().getLoginName());
+        article.setModifiedValue(PrincipalHolder.get().getLoginName());
         articleMapper.updateByPrimaryKeySelective(article);
 
         // 删除文章标签关联

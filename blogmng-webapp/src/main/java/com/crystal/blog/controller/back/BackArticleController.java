@@ -66,7 +66,7 @@ public class BackArticleController {
         if (!CollectionUtils.isEmpty(articleVO.getTags()) && !CollectionUtils.isEmpty(tagList)) {
             for (TagVO cate : tagList) {
                 for (TagVO tag : articleVO.getTags()) {
-                    if (cate.getId().equals(tag.getId())) {
+                    if (cate.getTag().equals(tag.getTag())) {
                         cate.setChecked(true);
                         break;
                     }
