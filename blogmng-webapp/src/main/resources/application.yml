@@ -6,7 +6,7 @@ server:
 spring:
   datasource:
     #url: jdbc:mysql://localhost:3306/blog
-    url: jdbc:mysql://crystal-910101.mysql.rds.aliyuncs.com:3306/blog
+    url: jdbc:mysql://127.0.0.1:3306/blog?useUnicode=true&amp;characterEncoding=utf-8
     username: crystal
     #password: 123456
     password: Crystal@123
@@ -20,6 +20,9 @@ spring:
     suffix: .html
     mode: HTML 5
     cache: false
+    encoding: UTF-8
+    servlet:
+      content-type: text/html; charset=utf-8
 
   mvc:
     static-path-pattern: /**
