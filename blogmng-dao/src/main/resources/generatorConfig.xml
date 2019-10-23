@@ -24,9 +24,9 @@
         </commentGenerator>
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/blog?useUnicode=true"
+                        connectionURL="jdbc:mysql://crystalcao.top:3306/blog?useUnicode=true"
                         userId="crystal"
-                        password="123456">
+                        password="Crystal@123">
         </jdbcConnection>
 
         <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
@@ -122,10 +122,10 @@
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <columnOverride column="type" jdbcType="TINYINT" javaType="java.lang.Integer"/>
         </table>-->
-        <table schema="blog" tableName="user" domainObjectName="User">
+        <table schema="blog" tableName="theme_effect" domainObjectName="ThemeEffect">
             <property name="useActualColumnNames" value="false"/>
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <columnOverride column="sex" jdbcType="TINYINT" javaType="java.lang.Integer"/>
+            <columnOverride column="type" jdbcType="TINYINT" javaType="java.lang.Integer"/>
             <columnOverride column="status" jdbcType="TINYINT" javaType="java.lang.Integer"/>
         </table>
     </context>

@@ -36,6 +36,22 @@ $(document).ready(function () {
             $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut();
         });
     }, 'json');
+
+    // 主题事件
+    $.get(basePath+"themeEffects", {}, function (data) {
+        if (data.success && data.data.length>0) {
+            var scripts = [];
+            var dd = data.data;
+            for (var i=0;i<dd.length;i++) {
+                if (dd[i].status === 1) {
+                    scripts.push('<script src="'+basePath+dd[i].scriptUrl+'" type="text/javascript"></script>\n');
+                }
+            }
+            $('body').append(scripts.join(''));
+
+        }
+    } );
+
 });
 
 function createNav(navList, level) {

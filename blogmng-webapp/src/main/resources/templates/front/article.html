@@ -24,6 +24,7 @@
                 <h1> <small th:text="${article.tagsStr}"> </small></h1>
                 <p id="articleInfo"><span th:text="${'时间：'+ #dates.format(article.createTime, 'yyyy-MM-dd') + ' 访问量：' + article.visitCount}"></span></p>
             </div>
+            <div id="custom-toc-container"></div>
             <div id="articleContent">
                 <textarea id="articleContentText" style="display:none;" name="test-editormd-markdown-doc" th:utext="${article.content}"></textarea>
             </div>
@@ -101,8 +102,10 @@
                 flowChart       : true,  // 默认不解析
                 sequenceDiagram : true,  // 默认不解析
                 tocm : true,//菜单
-                tocContainer : "",
-                tocDropdown   : false
+                // 目录
+                tocContainer  : "#custom-toc-container",
+                tocDropdown   : true,
+                tocTitle      : "目录",
             });
 
             if ($.cookie("authId")) {

@@ -278,3 +278,13 @@ CREATE TABLE `access_token` (
   `update_time` datetime DEFAULT NULL COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='访问token';
+
+CREATE TABLE `theme_effect` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+	`name` TINYINT(4) NOT NULL COMMENT '时间名称',
+	`css_urls` varchar(100) NULL COMMENT '样式地址',
+  `script_urls` varchar(100) NULL COMMENT '脚本地址',
+  `create_by` varchar(20) DEFAULT NULL COMMENT '创建人',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='主题效果事件';
