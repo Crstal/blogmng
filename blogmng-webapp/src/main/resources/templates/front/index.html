@@ -228,6 +228,16 @@
             </p>
             <br />
 
+            <h3>友情链接</h3>
+            <ul id="friend-link">
+                <li><a href="https://snailclimb.top/JavaGuide">JavaGuide</a></li>
+                <li><a href="http://www.iocoder.cn/">芋道源码</a></li>
+                <li><a href="https://blog.csdn.net/caoyue_new">CSDN</a></li>
+                <li><a href="https://github.com/Crstal">GitHub</a></li>
+                <li><a href="https://gper.club/gper-doc/java/vipResource.html">咕泡</a></li>
+            </ul>
+            <br />
+
             <h3>热门文章</h3>
             <ol id="hotArticle">
                 <li th:each="hotArticle: ${hotArticleList}"><a th:href="@{'/article/'+${hotArticle.id}}" th:text="${hotArticle.title}"></a>
