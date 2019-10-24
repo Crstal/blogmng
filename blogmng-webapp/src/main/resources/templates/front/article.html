@@ -24,7 +24,10 @@
                 <h1> <small th:text="${article.tagsStr}"> </small></h1>
                 <p id="articleInfo"><span th:text="${'时间：'+ #dates.format(article.createTime, 'yyyy-MM-dd') + ' 访问量：' + article.visitCount}"></span></p>
             </div>
-            <div id="custom-toc-container"></div>
+            <div class="nav-right-box">
+                <div id="custom-toc-container"></div>
+                <div id="custom-toc-container-nav">目<br/>录</div>
+            </div>
             <div id="articleContent">
                 <textarea id="articleContentText" style="display:none;" name="test-editormd-markdown-doc" th:utext="${article.content}"></textarea>
             </div>

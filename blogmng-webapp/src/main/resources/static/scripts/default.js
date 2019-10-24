@@ -52,6 +52,18 @@ $(document).ready(function () {
         }
     } );
 
+    $('body').click(function (event) {
+        var rightBox = $(event.target).closest(".nav-right-box");
+        if (rightBox.length > 0) {
+            rightBox.children('div').toggle('slow');
+        } else {
+            if ($('#custom-toc-container').css('display') == 'block') {
+                $('#custom-toc-container-nav').show('slow');
+                $('#custom-toc-container').hide('slow');
+            }
+        }
+    });
+
 });
 
 function createNav(navList, level) {
