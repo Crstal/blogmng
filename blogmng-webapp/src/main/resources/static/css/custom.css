@@ -573,3 +573,10 @@ a.btn {
 }
 .transparent-bg{position: absolute;top: 0;left: 0;width: 100%;height: 100%;z-index: -1;zoom: 1;}
 .span4 h3{clear: both}
+.editormd-theme-dark .editormd-menu>li>a {
+    border: 0;}
+.editormd-theme-dark .editormd-toolbar { background: white;
+    border-color: #cccccc;}
+.editormd-theme-dark { border-color: #cccccc}
+.editormd-theme-dark .editormd-menu>li.divider {border-right: 1px solid #ddd;}
+.editormd-theme-dark .editormd-menu>li>a:hover{border-color:#cccccc;background:#cccccc}

@@ -28,8 +28,8 @@
                 <div id="custom-toc-container"></div>
                 <div id="custom-toc-container-nav">目<br/>录</div>
             </div>
-            <div id="articleContent">
-                <textarea id="articleContentText" style="display:none;" name="test-editormd-markdown-doc" th:utext="${article.content}"></textarea>
+            <div id="articleContent" class="editormd-preview-theme-dark">
+                <div id="articleContentText" style="display:none;" th:utext="${article.content}"></div>
             </div>
 
             <h3>给我留言</h3>
@@ -109,8 +109,9 @@
                 tocContainer  : "#custom-toc-container",
                 tocDropdown   : true,
                 tocTitle      : "目录",
+                previewTheme : "dark",
+                theme : "dark"
             });
-
             if ($.cookie("authId")) {
                 var aHtml = [];
                 aHtml.push('<a href="'+ basePath + 'back/article/');
