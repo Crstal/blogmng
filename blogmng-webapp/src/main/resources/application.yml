@@ -37,7 +37,13 @@ mybatis:
   config-location: classpath:mybatis/mybatis-config.xml
 
 #自定义的属性，指定了一个路径，注意要以/结尾
-blog.common.imagesPath: /tmp/blog/images/
+blog.image:
+  imagesPath: blogimage
+  endpoint: http://oss-cn-hangzhou.aliyuncs.com
+  showpoint: https://...hangzhou.aliyuncs.com
+  accessKeyId: xxx
+  accessKeySecret: xxx
+  bucketName: crystal-blog-image
 logging:
   config: classpath:log4j2.xml
 
